@@ -7,9 +7,17 @@ import ProfilePic from "../../../ui/ProfilePic";
 import Button from "../../../ui/Button";
 import { DayPicker } from "react-day-picker";
 import { ar } from "date-fns/locale";
-import { addDays } from "date-fns";
+import { addDays, formatISO } from "date-fns";
+import useGetPendedJobs from "./usePendedJob";
+import useGetPendedJob from "./usePendedJob";
+import FullPageLoading from "../../../ui/FullPageLoading";
+import NotFound from "../../../ui/NotFound";
 
 export default function PendedJob() {
+  const { data, isLoading, isFetched } = useGetPendedJob();
+  if (isLoading) return <FullPageLoading />;
+  if (isFetched && !data?.title)
+    return <NotFound message={"هذه المهمه ليست موجوده."} />;
   return (
     <div className="container mt-10 grid h-full items-start space-y-10 divide-text-color/20 md:mt-0 md:grid-cols-[1fr,300px] md:space-y-0 md:divide-x">
       <div className="relative h-full rounded-lg border-2 border-text-color/20 px-6 pb-4 pt-8 md:col-start-2 md:row-start-1 md:border-0 md:px-8 md:pb-0 md:pt-10">
@@ -60,17 +68,19 @@ export default function PendedJob() {
           تفاصيل المهمه
         </p>
         <div className="flex items-center justify-between">
-          <p className=" text-h2 ">إنشاء طاولة</p>
+          <p className=" text-h2 ">{data?.title}</p>
           <Button additionalStyle={` text-nowrap py-2`}>إلغاء</Button>
         </div>
-        <div className=" mt-2 flex items-center gap-10 text-gray">
+        <div className=" mt-5 flex items-center gap-10 text-gray">
           <span className="flex items-center gap-2">
             <MapPinIcon size={15} />
             <span className=" text-small">المنصورة</span>
           </span>
           <span className="flex items-center gap-2">
             <OutlineClockIcon size={15} />
-            <span className=" text-small">تم النشر من 6 ساعات</span>
+            <span className=" text-small">
+              تم النشر {formatISO(data?.created_at, { representation: "date" })}
+            </span>
           </span>
           <span className="flex items-center gap-2">
             <OutlineClockIcon size={15} />
@@ -82,16 +92,24 @@ export default function PendedJob() {
           <input
             type="date"
             disabled
-            value="2018-07-22"
+            value={formatISO(data?.start_date, {
+              representation: "date",
+            })}
             className="!cursor-default appearance-none rounded-lg bg-secondary-background px-4 py-2 text-medium text-opacity-100 !opacity-100"
           />
-          <span className="text-gray">تاريخ الانتهاء</span>
-          <input
-            type="date"
-            disabled
-            value="2018-07-22"
-            className="!cursor-default appearance-none rounded-lg bg-secondary-background px-4 py-2 text-medium text-opacity-100  !opacity-100 "
-          />
+          {data.end_date && (
+            <>
+              <span className="text-gray">تاريخ الانتهاء</span>
+              <input
+                type="date"
+                disabled
+                value={formatISO(data.end_date, {
+                  representation: "date",
+                })}
+                className="!cursor-default appearance-none rounded-lg bg-secondary-background px-4 py-2 text-medium text-opacity-100  !opacity-100 "
+              />
+            </>
+          )}
         </div>
         {/* <DayPicker
           style={{ margin: 0 }}
@@ -109,16 +127,7 @@ export default function PendedJob() {
         /> */}
         <div className="mb-5">
           <span className="text-gray">الوصف:</span>
-          <p className="mt-5">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
-            ratione unde omnis, placeat voluptatum beatae distinctio eveniet.
-            Exercitationem expedita neque, molestiae error, eum deserunt, illo
-            fugiat vero voluptas repellendus nobis. Lorem ipsum dolor sit amet,
-            consectetur adipisicing elit. Dolore ratione unde omnis, placeat
-            voluptatum beatae distinctio eveniet. Exercitationem expedita neque,
-            molestiae error, eum deserunt, illo fugiat vero voluptas repellendus
-            nobis. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          </p>
+          <p className="mt-5">{data?.description}</p>
         </div>
         <div className="flex gap-5 overflow-scroll py-2">
           <div className="w-32 min-w-32">

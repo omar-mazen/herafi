@@ -85,7 +85,7 @@ export default function HandymanProfile() {
               <SettingIcon />
             </Link>
           ) : (
-            !role == "handyman" && <AddToFavoriteButton />
+            <AddToFavoriteButton />
           )}
         </div>
       </div>
@@ -256,7 +256,7 @@ export function About({
                 <ThreeDots />
               </Menu.Toggle>
               <Menu.List name={"specialImgs"}>
-                <Menu.Item icon={<PenIcon />}>تعديل</Menu.Item>
+                <Menu.Item icon={<PenIcon size={15} />}>تعديل</Menu.Item>
                 <Menu.Item icon={<PlusIcon />}>اضافة</Menu.Item>
               </Menu.List>
             </Menu>

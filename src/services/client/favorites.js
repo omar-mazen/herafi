@@ -55,7 +55,9 @@ export async function addHandymanToFavoriteList({
     response = await apiPrivate.post(
       `/api/client/add_to_FavoriteList?client_id=${clientId}&craftsman_id=${handymanId}&list_id=${listId}`,
     );
+    console.log(response);
   } catch (error) {
+    console.log(error);
     throw new Error(error.response.data.message);
   }
 }

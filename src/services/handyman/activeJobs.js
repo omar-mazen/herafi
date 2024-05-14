@@ -20,9 +20,11 @@ export async function getAciveJob({ jobId }) {
   let response;
   try {
     response = await apiPrivate.post(`api/craftsman/get_job?job_id=${jobId}`);
+    console.log(response);
     const data = await response.data.data;
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error(error.response.data.message);
   }
 }

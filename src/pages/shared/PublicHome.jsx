@@ -41,7 +41,7 @@ export default function PublicHome() {
         <section className="grid h-dvh grid-rows-[auto,1fr] items-center justify-center md:h-fit md:grid-cols-[1fr,auto] md:grid-rows-1 md:items-center">
           <div className=" flex max-h-[300px] max-w-[300px] items-center justify-center place-self-center md:col-start-2 md:col-end-3 md:row-start-1">
             <img
-              src="/public/char-blob.png"
+              src="/char-blob.png"
               className="aspect-square h-full w-full object-contain object-center"
             />
           </div>
@@ -59,8 +59,9 @@ export default function PublicHome() {
               إلينا اليوم لتحقيق النجاح في عالم الحرف والمهارات.
             </p>
             <Button
-              size="medium"
-              additionalStyle={`text-nowrap self-end md:self-start`}
+              onClick={() => navigate("/signup")}
+              size="large"
+              additionalStyle={`text-nowrap self-end md:self-start py-3`}
             >
               إنشاء حساب
             </Button>
@@ -97,39 +98,37 @@ export default function PublicHome() {
           <h2 className=" mb-12 text-h2 text-gray">الحرف المتاحة</h2>
           <div className="grid grid-cols-2 items-center justify-evenly gap-10 sm:grid-cols-[repeat(auto-fit,minmax(100px,200px))]">
             <CraftCard
-              img={"before:bg-[url('public/crafts/blacksmith.png')]"}
+              img={"before:bg-[url(/crafts/blacksmith.png')]"}
               craftName={"حِداده"}
               number={"54 حداد"}
             />
             <CraftCard
-              img={"before:bg-[url('/public/crafts/carpenter.png')]"}
+              img={"before:bg-[url('/crafts/carpenter.png')]"}
               craftName={"نجاره"}
               number={"36 نجار"}
             />
             <CraftCard
-              img={
-                "before:bg-[url('/public/crafts/electrical-technician.png')]"
-              }
+              img={"before:bg-[url('/crafts/electrical-technician.png')]"}
               craftName={"كهرباء"}
               number={"47 كهربائي"}
             />
             <CraftCard
-              img={"before:bg-[url('/public/crafts/gypsom-worker.png')]"}
+              img={"before:bg-[url('/crafts/gypsom-worker.png')]"}
               craftName={"جبس"}
               number={"47 فني جبس"}
             />
             <CraftCard
-              img={"before:bg-[url('/public/crafts/mechanic.png')]"}
+              img={"before:bg-[url('/crafts/mechanic.png')]"}
               craftName={"ميكانيكا"}
               number={"19 ميكانيكي"}
             />
             <CraftCard
-              img={"before:bg-[url('/public/crafts/painter.png')]"}
+              img={"before:bg-[url('/crafts/painter.png')]"}
               craftName={"نقاشة"}
               number={"23 نقاش"}
             />
             <CraftCard
-              img={"before:bg-[url('/public/crafts/plumber.png')]"}
+              img={"before:bg-[url('/crafts/plumber.png')]"}
               craftName={"سباكة"}
               number={"20 سباك"}
             />
@@ -142,7 +141,7 @@ export default function PublicHome() {
 function StatsCrad({ icon, number, title }) {
   return (
     <div className="flex w-full flex-col items-center rounded-lg border border-text-color/5 bg-text-color/[0.02] py-8 shadow-md dark:shadow-lg">
-      <span className="rounded-full bg-gradient-to-t from-primary-color/40 to-primary-color/70 p-5 text-rose-200  ">
+      <span className="rounded-full bg-gradient-to-t from-primary-color/40 to-primary-color/80 p-5 text-rose-100  ">
         {icon}
       </span>
       <span className=" text-h1 text-primary-color/80">{number}</span>

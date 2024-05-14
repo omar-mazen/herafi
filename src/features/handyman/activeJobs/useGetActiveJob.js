@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 export default function useGetActiveJob() {
   const { id } = useParams();
   const { data, isLoading } = useQuery({
-    queryKey: [`active-jobs`],
+    queryKey: [`active-job`, id],
     queryFn: () => getAciveJob({ jobId: id }),
   });
   return { isLoading, data };

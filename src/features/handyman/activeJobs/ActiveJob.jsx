@@ -10,9 +10,8 @@ import FullPageLoading from "../../../ui/FullPageLoading";
 import useAddJobOffer from "../newJobs/useAddJobOffer";
 
 export default function ActiveJob() {
-  const { isLoading, data } = useGetActiveJob();
+  const { isLoading, data, i } = useGetActiveJob();
   if (isLoading) return <FullPageLoading />;
-
   console.log(data);
   return (
     <div className="container mt-10 grid h-full w-full items-start space-y-10 divide-text-color/20 md:mt-0 md:grid-cols-[1fr,300px] md:space-y-0 md:divide-x">
