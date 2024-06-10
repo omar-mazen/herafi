@@ -1,3 +1,9 @@
+import {
+  differenceInDays,
+  differenceInMonths,
+  differenceInYears,
+} from "date-fns";
+
 export function setCookie(key, value) {
   document.cookie = `${key}=${value};`;
 }
@@ -13,4 +19,18 @@ export function getCookie(key) {
 }
 export function deleteCookie(key) {
   document.cookie = `${key}=;`;
+}
+export function joinDate({ date }) {
+  const joinDate = {
+    inYear: differenceInYears(Date.now(), date),
+    inMonth: differenceInMonths(Date.now(), date),
+    inDay: differenceInDays(Date.now(), date),
+  };
+  {
+    return joinDate.inYear
+      ? `${joinDate.inYear} سنه`
+      : joinDate.inMonth
+        ? `${joinDate.inMonth} شهر`
+        : `${joinDate.inDay} يوم`;
+  }
 }

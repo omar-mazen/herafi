@@ -26,6 +26,6 @@ export default function ProtectedRoutes({ allowedRole }) {
     <p>ليس لدك صلاحية الوصول الي هذه الصفحة.</p>
   ) : (
     //user not authorized
-    <Navigate to={"/"} replace={true} />
+    <Navigate to={"/"} replace />
   );
 }

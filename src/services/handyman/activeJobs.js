@@ -20,6 +20,25 @@ export async function getAciveJob({ jobId }) {
   let response;
   try {
     response = await apiPrivate.post(`api/craftsman/get_job?job_id=${jobId}`);
+    const data = await response.data.data;
+    return data[0];
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.response.data.message);
+  }
+}
+export async function handymanFinishJob({
+  handymanId,
+  jobId,
+  rating,
+  comment,
+}) {
+  let response;
+  try {
+    response = await apiPrivate.post(
+      `api/craftsman/finish_job?craftsman_id=${handymanId}&active_job_id=${jobId}`,
+      { rating, comment },
+    );
     console.log(response);
     const data = await response.data.data;
     return data;

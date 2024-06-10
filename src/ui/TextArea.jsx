@@ -9,7 +9,7 @@ export default function TextArea({
   return (
     <textarea
       value={value}
-      onChange={setValue}
+      onChange={(e) => setValue(e.target.value)}
       required={required}
       minLength={min}
       maxLength={max}

@@ -8,12 +8,11 @@ export async function getAllPendedJobs({ id, pageSize, page }) {
     );
     const data = await response.data.data;
     return {
-      // currentPage: data?.current_page,
-      // latestPage: data?.last_page,
-      latestPage: 1,
-      data: data.reduce((prev, curr) => [...prev, curr[0]], []),
+      latestPage: data?.last_page,
+      data: data.data,
     };
   } catch (error) {
+    console.log(error);
     throw new Error(error.response.data.message);
   }
 }

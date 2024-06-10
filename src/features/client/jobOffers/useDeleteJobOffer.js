@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteJobOffer as deleteJobOfferApi } from "../../../services/client/jobOffer";
 import { useSearchParams } from "react-router-dom";
-import { useAuth } from "../../../context/Auth";
 import { toast } from "react-toastify";
 
 export default function useDeleteJobOffer() {

@@ -42,6 +42,7 @@ export default function DoneJobs() {
                     title={job.title}
                     description={job.description}
                     city={job.city}
+                    id={job.id}
                   />
                 ))}
               </div>
@@ -63,12 +64,12 @@ function FilterAndSort() {
     </div>
   );
 }
-function DoneJobCard({ title, description, city }) {
+function DoneJobCard({ title, description, city, id }) {
   const navigate = useNavigate();
   return (
     <div
       className=" cursor-pointer space-y-5 overflow-hidden rounded-lg bg-secondary-background px-6 py-4"
-      onClick={() => navigate("/handyman/job/new/2")}
+      onClick={() => navigate(`/handyman/job/done/${id}`)}
     >
       <div className=" flex items-center justify-between">
         <div className="flex items-center gap-5">

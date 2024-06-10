@@ -9,7 +9,7 @@ export default function useGetDoneJobs() {
   const [searcharams] = useSearchParams();
   const page = searcharams.get("page") || 1;
   const { data, isLoading } = useQuery({
-    queryKey: [`done-jobs`],
+    queryKey: [`done-jobs`, page],
     queryFn: () => getAllDoneJobs({ id, pageSize: bigPageSize, page }),
   });
   return { isLoading, data };

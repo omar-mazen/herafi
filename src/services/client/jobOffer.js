@@ -45,6 +45,17 @@ export async function deleteJobOffer({ jobOfferId }) {
     throw new Error(error.response.data.message);
   }
 }
+export async function acceptJobOffer({ handymanId, jobOfferId }) {
+  console.log(handymanId, jobOfferId);
+  try {
+    await apiPrivate.post(
+      `/api/client/add_job?craftsman_id=${handymanId}&job_offer_id=${jobOfferId}`,
+    );
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}
+
 export async function getJobOffer({ jobOfferId }) {
   let response;
   try {

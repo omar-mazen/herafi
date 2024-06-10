@@ -10,7 +10,7 @@ export default function Rating({
 }) {
   const [tempRating, setTempRating] = useState(0);
   return (
-    <ul className="flex justify-center gap-1">
+    <ul className="flex justify-center gap-1" style={{ direction: "ltr" }}>
       {Array.from({ length: stars }, (_, i) => (
         <Star
           key={i}

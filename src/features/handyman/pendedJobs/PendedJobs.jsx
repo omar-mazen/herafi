@@ -12,10 +12,9 @@ export default function PendedJobs() {
   const screen = useScreenType();
   const { isLoading, data } = useGetPendedJobs();
   if (isLoading) return <FullPageLoading />;
-  console.log(data);
   return (
     <Modal modalCloseScreenSize={["xl"]}>
-      <div className=" container grid h-full grid-rows-[auto,1fr] gap-x-20 pt-5 lg:grid-cols-[minmax(auto,250px),1fr]">
+      <div className=" container grid h-full grid-rows-[auto,1fr] gap-x-20 lg:grid-cols-[minmax(auto,250px),1fr]">
         <div className=" my-5 flex items-center justify-between sm:my-7 md:my-10 lg:col-start-1 lg:col-end-3 lg:row-start-1">
           <h1 className=" text-h2">المهام المعلقه</h1>
           {(screen == "mobile" || screen == "sm" || screen == "md") && (
@@ -37,43 +36,16 @@ export default function PendedJobs() {
           {data?.data?.length > 0 ? (
             <>
               <div className=" space-y-5">
-                {data.data.map((job, i) => (
+                {data.data.map((job) => (
                   <>
                     <PendedJobCard
-                      key={i}
-                      title={job.title}
-                      description={job.description}
-                      city={job.city}
-                      img={job.image}
+                      key={job?.pending_job_id}
+                      title={job?.pending_job[0]?.title}
+                      description={job?.pending_job[0]?.description}
+                      city={job?.pending_job[0]?.city}
+                      img={job?.pending_job[0]?.image}
+                      id={job?.pending_job_id}
                     />
-                    {/* <PendedJobCard
-                      key={i}
-                      title={job.title}
-                      description={job.description}
-                      city={job.city}
-                      img={job.image}
-                    />
-                    <PendedJobCard
-                      key={i}
-                      title={job.title}
-                      description={job.description}
-                      city={job.city}
-                      img={job.image}
-                    />
-                    <PendedJobCard
-                      key={i}
-                      title={job.title}
-                      description={job.description}
-                      city={job.city}
-                      img={job.image}
-                    />
-                    <PendedJobCard
-                      key={i}
-                      title={job.title}
-                      description={job.description}
-                      city={job.city}
-                      img={job.image}
-                    /> */}
                   </>
                 ))}
               </div>
@@ -95,12 +67,12 @@ function FilterAndSort() {
     </div>
   );
 }
-function PendedJobCard({ title, description, city }) {
+function PendedJobCard({ title, description, city, id }) {
   const navigate = useNavigate();
   return (
     <div
       className=" cursor-pointer space-y-5 overflow-hidden rounded-lg bg-secondary-background px-6 py-4"
-      onClick={() => navigate("/handyman/job/new/2")}
+      onClick={() => navigate(`/handyman/job/pended/${id}/`)}
     >
       <div className=" flex items-center justify-between">
         <div className="flex items-center gap-5">

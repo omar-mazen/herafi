@@ -12,10 +12,13 @@ import { imgBaseURL, smallPageSize } from "../../../util/constatnt";
 import useGetJobOfferReplies from "./useGetJobOfferReplies";
 import SmallSpinner from "../../../ui/SmallSpinner";
 import NotFound from "../../../ui/NotFound";
+import useAcceptJobOffer from "./useAcceptOffer";
+import { useParams } from "react-router-dom";
 
 export default function JobOffer() {
   // const [searchParams, setSearchParams] = useSearchParams();
   // const price = searchParams.get("price") || "lte";
+  const { id } = useParams();
   const { isLoading: isJobOfferLoading, data: jobOffer } = useGetJobOffer();
   const { isLoading: isJobOfferRepliesLoading, data: jobOfferReplies } =
     useGetJobOfferReplies({ pageSize: smallPageSize });
@@ -46,6 +49,7 @@ export default function JobOffer() {
               <span className="text-gray">تاريخ البدأ</span>
               <input
                 type="date"
+                placeholder="dd-mm-yyyy"
                 disabled
                 value={formatISO(jobOffer.start_date, {
                   representation: "date",
@@ -59,6 +63,7 @@ export default function JobOffer() {
               <span className="text-gray">تاريخ الانتهاء</span>
               <input
                 type="date"
+                placeholder="dd-mm-yyyy"
                 disabled
                 value={formatISO(jobOffer.end_date, {
                   representation: "date",
@@ -116,6 +121,7 @@ export default function JobOffer() {
           ) : jobOfferReplies?.data?.length > 0 ? (
             <div className="max-w-[600px] space-y-5 md:space-y-10">
               {jobOfferReplies.data.map((reply, i) => (
+                // console.log(reply),
                 <ReplyCard
                   key={i}
                   handymanName={reply.craftsman_name}
@@ -125,6 +131,8 @@ export default function JobOffer() {
                   description={reply.description}
                   price={reply.offered_price}
                   unit={reply?.type_of_pricing}
+                  handymanId={reply.craftsman_id}
+                  jobOfferId={id}
                 />
               ))}
               <Pagenation total={jobOfferReplies?.latestPage} />
@@ -148,7 +156,11 @@ function ReplyCard({
   numberOfRating,
   handymanImg,
   handymanName,
+  jobOfferId,
+  handymanId,
 }) {
+  const { isLoading, acceptJobOffer } = useAcceptJobOffer();
+  console.log(handymanId, jobOfferId);
   return (
     <div className="rounded-lg bg-secondary-background px-6 py-8">
       <div className="flex items-center gap-5 ">
@@ -172,8 +184,14 @@ function ReplyCard({
         <span>{unit}</span>
       </div>
       <div className="mt-5 flex items-center justify-end gap-5">
-        <Button additionalStyle={` !bg-success-color`}>قبول</Button>
-        <Button additionalStyle={` !bg-warning-color`}>رفض</Button>
+        <Button
+          onClick={() => acceptJobOffer({ jobOfferId, handymanId })}
+          additionalStyle={` !bg-success-color`}
+          disabled={isLoading}
+        >
+          {isLoading ? <SmallSpinner /> : "قبول"}
+        </Button>
+        {/* <Button additionalStyle={` !bg-warning-color`}>رفض</Button> */}
       </div>
     </div>
   );

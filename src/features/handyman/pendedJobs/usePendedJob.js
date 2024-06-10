@@ -5,7 +5,7 @@ import { getPendedJob } from "../../../services/handyman/pendedJobs";
 export default function useGetPendedJob() {
   const { id } = useParams();
   const { data, isLoading, isFetched } = useQuery({
-    queryKey: [`pended-jobs`],
+    queryKey: [`pended-job`, id],
     queryFn: () => getPendedJob({ jobId: id }),
   });
   return { isLoading, data, isFetched };

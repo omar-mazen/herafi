@@ -42,39 +42,12 @@ export default function ActiveJobs() {
                   <>
                     <JobCard
                       key={i}
+                      id={job.id}
                       title={job.title}
                       description={job.description}
                       city={job.city}
                       img={job.image}
                     />
-                    {/* <JobCard
-                      key={i}
-                      title={job.title}
-                      description={job.description}
-                      city={job.city}
-                      img={job.image}
-                    />
-                    <JobCard
-                      key={i}
-                      title={job.title}
-                      description={job.description}
-                      city={job.city}
-                      img={job.image}
-                    />
-                    <JobCard
-                      key={i}
-                      title={job.title}
-                      description={job.description}
-                      city={job.city}
-                      img={job.image}
-                    />
-                    <JobCard
-                      key={i}
-                      title={job.title}
-                      description={job.description}
-                      city={job.city}
-                      img={job.image}
-                    /> */}
                   </>
                 ))}
               </div>
@@ -96,12 +69,12 @@ function FilterAndSort() {
     </div>
   );
 }
-function JobCard({ title, city, description, img }) {
+function JobCard({ title, city, description, img, id }) {
   const navigate = useNavigate();
   return (
     <div
       className=" cursor-pointer space-y-5 overflow-hidden rounded-lg bg-secondary-background px-6 py-4"
-      onClick={() => navigate("/handyman/job/new/2")}
+      onClick={() => navigate(`/handyman/job/active/${id}`)}
     >
       <div className=" flex items-center justify-between">
         <div className="flex items-center gap-5">
