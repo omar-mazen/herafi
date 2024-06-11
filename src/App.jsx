@@ -41,6 +41,7 @@ import {
   getFavoriteList,
 } from "./services/client/favorites";
 import PublicHome from "./pages/shared/PublicHome";
+import ClientHome from "./pages/client/ClientHome";
 
 function App() {
   const { crafts } = useGetAllCrafts();
@@ -132,6 +133,8 @@ function App() {
           {ClientRoutes}
           {handymanRoutes}
           {sharedRoutes}
+          <Route path="home" element={<ClientHome />}></Route>
+          <Route path="test"></Route>
         </Route>
         <Route
           path="*"

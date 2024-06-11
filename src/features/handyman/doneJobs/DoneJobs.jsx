@@ -13,54 +13,30 @@ export default function DoneJobs() {
   const { isLoading, data } = useGetDoneJobs();
   if (isLoading) return <FullPageLoading />;
   return (
-    <Modal modalCloseScreenSize={["xl"]}>
-      <div className=" container grid h-full grid-rows-[auto,1fr] gap-x-20 pt-5 lg:grid-cols-[minmax(auto,250px),1fr]">
-        <div className=" my-5 flex items-center justify-between sm:my-7 md:my-10 lg:col-start-1 lg:col-end-3 lg:row-start-1">
-          <h1 className=" text-h2">المهام التي تم انهائها</h1>
-          {(screen == "mobile" || screen == "sm" || screen == "md") && (
-            <Modal.Open opens={"filter"}>
-              <span className=" cursor-pointer rounded-full bg-text-color p-2 text-primary-background">
-                <FilterIcon />
-              </span>
-            </Modal.Open>
-          )}
-        </div>
-        {screen == "lg" || screen == "xl" ? (
-          <FilterAndSort />
-        ) : (
-          <Modal.Window name={"filter"}>
-            <FilterAndSort />
-          </Modal.Window>
-        )}
-        <section className="grid h-full w-full grid-rows-[1fr,auto] space-y-5 pb-5 md:space-y-10 lg:col-start-2 lg:row-start-2">
-          {data.data.length > 0 ? (
-            <>
-              <div className=" space-y-5">
-                {data.data.map((job, i) => (
-                  <DoneJobCard
-                    key={i}
-                    title={job.title}
-                    description={job.description}
-                    city={job.city}
-                    id={job.id}
-                  />
-                ))}
-              </div>
-              <Pagenation total={data.latestPage} />
-            </>
-          ) : (
-            <p>لايوجد مهام منتهيه.</p>
-          )}
-        </section>
+    <div className=" container grid h-full grid-rows-[auto,1fr] gap-x-20 pt-5">
+      <div className=" my-5 flex items-center justify-between sm:my-7 md:my-10 lg:row-start-1">
+        <h1 className=" text-h2">المهام التي تم انهائها</h1>
       </div>
-    </Modal>
-  );
-}
-function FilterAndSort() {
-  return (
-    <div className="sticky top-5 h-[calc(100vh-16rem)] w-full space-y-5 overflow-y-scroll rounded-md p-1 md:col-start-1 md:row-start-2">
-      <SortBy options={["date-asc", "date-desc"]} />
-      <Filter options={["location"]} />
+      <section className="grid h-full w-[300px] max-w-[800px] grid-rows-[1fr,auto] space-y-5 justify-self-center pb-5 sm:w-[500px]  md:w-[600px] md:space-y-10 lg:row-start-2 lg:w-[800px]">
+        {data.data.length > 0 ? (
+          <>
+            <div className=" space-y-5">
+              {data.data.map((job, i) => (
+                <DoneJobCard
+                  key={i}
+                  title={job.title}
+                  description={job.description}
+                  city={job.city}
+                  id={job.id}
+                />
+              ))}
+            </div>
+            <Pagenation total={data.latestPage} />
+          </>
+        ) : (
+          <p>لايوجد مهام منتهيه.</p>
+        )}
+      </section>
     </div>
   );
 }
@@ -79,7 +55,9 @@ function DoneJobCard({ title, description, city, id }) {
           <span className=" text-xsmall text-primary-color">{city}</span>
         )}
       </div>
-      <p className=" line-clamp-3 text-small">{description}</p>
+      <p className=" line-clamp-3 max-w-[200px] sm:max-w-[400px] md:max-w-[600px]">
+        {description}
+      </p>
     </div>
   );
 }

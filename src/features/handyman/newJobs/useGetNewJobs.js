@@ -1,11 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
-import { getAciveJob } from "../../../services/handyman/activeJobs";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 import { useAuth } from "../../../context/Auth";
 import { getAllNewJobs } from "../../../services/handyman/newJobs";
 import { bigPageSize } from "../../../util/constatnt";
 
-export default function useGetNewJobs() {
+export default function useGetNewJobs(pageSize = bigPageSize) {
   const [searchParams] = useSearchParams();
   const page = searchParams.get("page") || 1;
   const { user } = useAuth();
@@ -16,7 +15,7 @@ export default function useGetNewJobs() {
         cities: user?.cities,
         craft: user?.craft.name,
         page,
-        pageSize: bigPageSize,
+        pageSize,
       }),
   });
   return { isLoading, data, isFetched };

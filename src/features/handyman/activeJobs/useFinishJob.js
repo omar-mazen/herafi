@@ -16,7 +16,8 @@ export default function useFinishJob() {
       toast.success("تم إنهاء المهمة بنجاح. ننتظر تأكيد العميل على إتمامها .");
       navigate("/handyman");
     },
-    onError: () => toast.error("لم يتم انهاء المهمه ,حاول مرة اخري."),
+    onError: (error) =>
+      toast.error(error.message || "لم يتم انهاء المهمه ,حاول مرة اخري."),
   });
   return { isLoading, finishJob };
 }

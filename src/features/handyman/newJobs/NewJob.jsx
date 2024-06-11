@@ -7,7 +7,7 @@ import ProfilePic from "../../../ui/ProfilePic";
 import Button from "../../../ui/Button";
 import { DayPicker } from "react-day-picker";
 import { ar } from "date-fns/locale";
-import { addDays, min } from "date-fns";
+import { addDays, formatISO, min } from "date-fns";
 import Modal from "../../../ui/Modal";
 import FormInput from "../../../ui/FormInput";
 import FormTextArea from "../../../ui/FormTextArea";
@@ -15,17 +15,22 @@ import SelectOption from "../../../ui/SelectOption";
 import useAddJobOffer from "./useAddJobOffer";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import useGetNewJob from "./useGetNewJob";
+import FullPageLoading from "../../../ui/FullPageLoading";
 
 const options = ["متر طولي", "متر مربع", "نقطة", "المشروع"];
 export default function NewJob() {
   const [selectedOption, setSelectedOption] = useState(options[0]);
   const { isLoading: isJobOfferLoading, giveOffer } = useAddJobOffer();
+  const { isLoading, data, isFetched } = useGetNewJob();
   const {
     formState: { errors },
     getValues,
     watch,
     register,
   } = useForm({ mode: "onChange" });
+  if (isLoading) return <FullPageLoading />;
+  console.log(data);
   return (
     <Modal>
       <div className="container mt-10 grid h-full items-start space-y-10 divide-text-color/20 md:mt-0 md:grid-cols-[1fr,300px] md:space-y-0 md:divide-x">
@@ -77,19 +82,25 @@ export default function NewJob() {
             تفاصيل المهمه
           </p>
           <div className="flex items-center justify-between">
-            <p className=" text-h2 ">إنشاء طاولة</p>
+            <p className=" text-h2 ">{data?.title}</p>
             <Modal.Open opens={"makeOffer"}>
               <Button additionalStyle={` text-nowrap py-2`}>تقديم عرض</Button>
             </Modal.Open>
           </div>
-          <div className=" mt-2 flex items-center gap-10 text-gray">
+          <div className=" mt-5 flex items-center gap-10 text-gray">
             <span className="flex items-center gap-2">
               <MapPinIcon size={15} />
-              <span className=" text-small">المنصورة</span>
+              <span className=" text-small">{data?.city}</span>
             </span>
             <span className="flex items-center gap-2">
               <OutlineClockIcon size={15} />
-              <span className=" text-small">تم النشر من 6 ساعات</span>
+              <span className=" text-small">
+                تم النشر{" "}
+                {data?.created_at &&
+                  formatISO(data?.created_at, {
+                    representation: "date",
+                  })}
+              </span>
             </span>
           </div>
           <div className="my-10 grid w-fit grid-cols-[auto,auto] items-center gap-5">
@@ -97,44 +108,32 @@ export default function NewJob() {
             <input
               type="date"
               disabled
-              value="2018-07-22"
+              value={
+                data?.created_at &&
+                formatISO(data?.created_at, {
+                  representation: "date",
+                })
+              }
               className="!cursor-default appearance-none rounded-lg bg-secondary-background px-4 py-2 text-medium text-opacity-100 !opacity-100"
             />
-            <span className="text-gray">تاريخ الانتهاء</span>
-            <input
-              type="date"
-              disabled
-              value="2018-07-22"
-              className="!cursor-default appearance-none rounded-lg bg-secondary-background px-4 py-2 text-medium text-opacity-100  !opacity-100 "
-            />
+            {data?.end_date && (
+              <>
+                <span className="text-gray">تاريخ الانتهاء</span>
+                <input
+                  type="date"
+                  placeholder="dd-mm-yyyy"
+                  disabled
+                  value={formatISO(data?.end_date, {
+                    representation: "date",
+                  })}
+                  className="!cursor-default appearance-none rounded-lg bg-secondary-background px-4 py-2 text-medium text-opacity-100  !opacity-100 "
+                />
+              </>
+            )}
           </div>
-          {/* <DayPicker
-          style={{ margin: 0 }}
-          showOutsideDays
-          locale={ar}
-          dir="rtl"
-          weekStartsOn={6}
-          disableNavigation
-          disabled
-          mode="range"
-          selected={{
-            from: addDays(Date.now(), 0),
-            to: addDays(Date.now(), 10),
-          }}
-        /> */}
           <div className="mb-5">
             <span className="text-gray">الوصف:</span>
-            <p className="mt-5">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
-              ratione unde omnis, placeat voluptatum beatae distinctio eveniet.
-              Exercitationem expedita neque, molestiae error, eum deserunt, illo
-              fugiat vero voluptas repellendus nobis. Lorem ipsum dolor sit
-              amet, consectetur adipisicing elit. Dolore ratione unde omnis,
-              placeat voluptatum beatae distinctio eveniet. Exercitationem
-              expedita neque, molestiae error, eum deserunt, illo fugiat vero
-              voluptas repellendus nobis. Lorem ipsum dolor sit amet,
-              consectetur adipisicing elit.
-            </p>
+            <p className="mt-5">{data?.description}</p>
           </div>
           <div className="flex gap-5 overflow-scroll py-2">
             <div className="w-32 min-w-32">

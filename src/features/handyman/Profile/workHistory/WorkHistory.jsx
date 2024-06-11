@@ -1,3 +1,4 @@
+import SmallSpinner from "../../../../ui/SmallSpinner";
 import StaticRatingStars from "../../../../ui/StaticRatingStars";
 import { imgBaseURL } from "../../../../util/constatnt";
 import useGetWorkHistory from "./useGetWorkHistory";
@@ -9,20 +10,23 @@ export function WorkHistory() {
     <div className="w-full space-y-8">
       <p className=" mb-10 text-h2 tracking-wider">سجل الأعمال</p>
       <div className=" space-y-10">
-        {workHistory?.workHistory.length > 0 ? (
-          workHistory?.workHistory.map((job, i) => (
-            <WorkHistoryElement
-              key={i}
-              title={job?.title}
-              // review={job?.rating[0]?.comment}
-              // rating={job?.rating[0]?.rating}
-              imgs={job?.images?.map((img) => imgBaseURL + img.image)}
-              date={"12/2/2023"}
-            />
-          ))
-        ) : (
-          <p className=" text-medium">لا يوجد اعمال سابقه</p>
+        {isLoading && (
+          <div className="flex items-center justify-center">
+            <SmallSpinner />
+          </div>
         )}
+        {workHistory?.workHistory.length > 0
+          ? workHistory?.workHistory.map((job, i) => (
+              <WorkHistoryElement
+                key={i}
+                title={job?.title}
+                // review={job?.rating[0]?.comment}
+                // rating={job?.rating[0]?.rating}
+                imgs={job?.images?.map((img) => imgBaseURL + img.image)}
+                date={"12/2/2023"}
+              />
+            ))
+          : !isLoading && <p className=" text-medium">لا يوجد اعمال سابقه</p>}
       </div>
     </div>
   );

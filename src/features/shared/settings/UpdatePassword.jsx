@@ -1,25 +1,28 @@
 import { useForm } from "react-hook-form";
 import Button from "../../../ui/Button";
 import FormInput from "../../../ui/FormInput";
+import { updatePassword } from "../../../services/shared/user";
+import { useAuth } from "../../../context/Auth";
+import useUpdatePassword from "./useUpdatePassword";
 
 export default function UpdatePassword() {
+  const { id, role } = useAuth();
   const {
     register,
     reset,
+    watch,
     formState: { errors },
     getValues,
     handleSubmit,
   } = useForm({ mode: "onChange" });
-  //   const { isLoading, updatePassword } = useUpdatePassword();
-  function onSubmit({ oldPassword, newPassword, confirmPassword }) {
-    // updatePassword(
-    //   {
-    //     oldPassword,
-    //     password: newPassword,
-    //     cPassword: confirmPassword,
-    //   },
-    //   { onSuccess: reset },
-    // );
+  const { isLoading, updatePassword } = useUpdatePassword();
+  function onSubmit({ newPassword, confirmPassword }) {
+    updatePassword({
+      id,
+      role,
+      password: newPassword,
+      passwordConfirmation: confirmPassword,
+    });
   }
   return (
     <section>
@@ -28,19 +31,6 @@ export default function UpdatePassword() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex max-w-[400px] flex-col gap-5"
       >
-        {/* old password */}
-        <FormInput
-          label="كلمة المرور القديمة"
-          type={"password"}
-          value={getValues("oldPassword")}
-          error={errors.oldPassword}
-          placeholder="Old password"
-          register={{
-            ...register("oldPassword", {
-              required: { value: true, message: "كلمة المرور مطلوبة." },
-            }),
-          }}
-        />
         {/* new password */}
         <FormInput
           label={"كلمة المرور الجديدة"}
@@ -57,7 +47,7 @@ export default function UpdatePassword() {
               },
               maxLength: {
                 value: 30,
-                message: "يجب الا تزيد كلمة المرور عن 8 حروف.",
+                message: "يجب الا تزيد كلمة المرور عن 30 حرف.",
               },
               pattern: {
                 value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
@@ -78,19 +68,19 @@ export default function UpdatePassword() {
               required: { value: true, message: "كلمة المرور مطلوبة." },
               minLength: {
                 value: 8,
-                message: "Please enter at least 8 characters for password. ",
+                message: "يجب الا تقل كلمة المرور عن 8 حروف ",
               },
               maxLength: {
                 value: 30,
-                message: "Password must not longer than 30 characters.",
+                message: "يجب الا تزيد كلمة المرور عن 30 حرف.",
               },
               pattern: {
                 value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-                message:
-                  "must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number, Can contain special characters",
+                message: "يجب ان تتضمن كلمة المرور رمز '! @ $ % ^ & *'.",
               },
               validate: (value) =>
-                value === getValues("newPassword") || "password should match",
+                value === getValues("newPassword") ||
+                "يجب ان تتطابق كلمتا المرور",
             }),
           }}
         />
@@ -98,13 +88,12 @@ export default function UpdatePassword() {
           <Button
             type={"submit"}
             additionalStyle={`mt-5`}
-            // disabled={
-            //   isLoading ||
-            //   Object.keys(errors).length ||
-            //   !getValues("oldPassword") ||
-            //   !getValues("newPassword") ||
-            //   !getValues("confirmPassword")
-            // }
+            disabled={
+              isLoading ||
+              Object.keys(errors).length ||
+              !watch("newPassword") ||
+              !watch("confirmPassword")
+            }
           >
             تحديث
           </Button>

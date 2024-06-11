@@ -7,6 +7,7 @@ export async function getAllAciveJobs({ id, pageSize, page }) {
       `api/craftsman/get_jobs?craftsman_id=${id}&pagination=${pageSize}&page=${page}`,
     );
     const data = await response.data.data;
+    console.log(response);
     return {
       currentPage: data.current_page,
       latestPage: data.last_page,

@@ -12,6 +12,7 @@ import FormTextArea from "../../../../ui/FormTextArea";
 import FormInput from "../../../../ui/FormInput";
 import useGetPortfolio from "./useGetPortfolio";
 import { imgBaseURL } from "../../../../util/constatnt";
+import SmallSpinner from "../../../../ui/SmallSpinner";
 
 export function Portfolio() {
   const { id } = useParams();
@@ -23,7 +24,7 @@ export function Portfolio() {
     watch,
   } = useForm({ mode: "onChange" });
   const { addToPortfolio, isLoading } = useAddToPortfolio();
-  const { portfolio } = useGetPortfolio();
+  const { portfolio, isLoading: portfolioLoading } = useGetPortfolio();
   const [images, setImages] = useState([]);
   const isCurrentUserProfile = id == currentUserId;
   return (
@@ -39,6 +40,11 @@ export function Portfolio() {
             </Modal.Open>
           )}
         </div>
+        {portfolioLoading && (
+          <div className="flex items-center justify-center">
+            <SmallSpinner />
+          </div>
+        )}
         {portfolio?.portfolio.length > 0 ? (
           <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,250px))] gap-10 ">
             {portfolio?.portfolio?.map((portfolio, i) => (
@@ -51,7 +57,9 @@ export function Portfolio() {
             ))}
           </div>
         ) : (
-          <p className=" text-medium">لا يوجد مشاريع في معرض الاعمال</p>
+          !portfolioLoading && (
+            <p className=" text-medium">لا يوجد مشاريع في معرض الاعمال</p>
+          )
         )}
       </div>
       <Modal.Window name={"addToPortfolio"}>
@@ -209,7 +217,7 @@ function PortfolioElement({ imgs, title, description }) {
                 className=" aspect-[3/2] w-full min-w-[200px] overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color"
               >
                 <img
-                  src={imgBaseURL + img.image}
+                  src={`${imgBaseURL}${img.image}`}
                   alt={` صورة ${title}`}
                   className=" h-full w-full object-cover object-center"
                 />

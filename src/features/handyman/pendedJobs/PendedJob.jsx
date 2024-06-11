@@ -36,7 +36,7 @@ export default function PendedJob() {
         </p>
         <div className="flex items-center justify-between">
           <p className=" text-h2 ">{data[0]?.title}</p>
-          <Button additionalStyle={` text-nowrap py-2`}>إلغاء</Button>
+          {/* <Button additionalStyle={` text-nowrap py-2`}>إلغاء</Button> */}
         </div>
         <div className=" mt-5 flex items-center gap-10 text-gray">
           <span className="flex items-center gap-2">

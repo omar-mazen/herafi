@@ -7,7 +7,6 @@ export async function getAllNewJobs({ cities, craft, pageSize, page }) {
   try {
     response = await apiPrivate.post(url);
     const data = await response.data.data;
-    console.log(response);
     return {
       currentPage: data.jobOffers.current_page,
       latestPage: data.jobOffers.last_page,
@@ -17,11 +16,11 @@ export async function getAllNewJobs({ cities, craft, pageSize, page }) {
     throw new Error(error.response.data.message);
   }
 }
-export async function getAciveJob({ jobId }) {
+export async function getNewJob({ jobId }) {
   let response;
   try {
     response = await apiPrivate.post(
-      `api/client/get_job_offer?job_offer_id${jobId}`,
+      `api/client/get_job_offer?job_offer_id=${jobId}`,
     );
     const data = await response.data.data;
     return data[0];

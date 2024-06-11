@@ -19,9 +19,9 @@ export function AuthProvider({ children }) {
     user: null,
   });
   // const [auth, setAuth] = useState({
-  //   isAuth: true,
-  //   // role: "handyman",
-  //   role: "client",
+  // isAuth: false,
+  // role: "handyman",
+  // role: "client",
   // });
   useEffect(() => {
     async function getUser() {

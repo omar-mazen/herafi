@@ -4,17 +4,12 @@ import UserIcon from "../../../icons/UserIcon";
 import KeyIcon from "../../../icons/KeyIcon";
 import ChatIcon from "../../../icons/ChatIcon";
 import MapPinIcon from "../../../icons/MapPinIcon";
-import { useEffect } from "react";
-import { appTitle } from "../../../util/constatnt";
 
 export default function Settings() {
   const { role } = useAuth();
   const { pathname } = useLocation();
-  useEffect(function () {
-    document.title = `الاعدادت`;
-  }, []);
   return (
-    <div className=" grid h-dvh grid-cols-[200px,1fr] gap-x-5 overflow-hidden">
+    <div className=" grid h-full grid-cols-[200px,1fr] gap-x-5 overflow-hidden">
       <ul className=" h-full w-full divide-y divide-text-color/20 overflow-y-auto border-l border-text-color/20">
         <li
           className={`cursor-pointer px-6 py-6 transition-all duration-200 ease-in-out hover:backdrop-brightness-90 ${pathname.split("/").at(-1) == "update-account" ? "font-semibold text-primary-color" : ""}`}
@@ -56,7 +51,7 @@ export default function Settings() {
           </>
         )}
       </ul>
-      <div className="mx-10 mt-5 overflow-auto  sm:mt-10">
+      <div className="mx-10 mt-5 overflow-auto sm:mt-10">
         <Outlet />
       </div>
     </div>

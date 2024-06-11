@@ -121,11 +121,7 @@ export default function AccountSettings() {
       <p className="mt-5  justify-self-start text-medium font-semibold tracking-wider">
         اكتب نبذة عنك :
       </p>
-      <TextArea
-        value={bio}
-        setValue={(e) => setBio(e.target.value)}
-        placeholder="اكتب نبذة عنك..."
-      />
+      <TextArea value={bio} setValue={setBio} placeholder="اكتب نبذة عنك..." />
       <Button
         disabled={isLoading}
         additionalStyle={`justify-self-end mt-5`}

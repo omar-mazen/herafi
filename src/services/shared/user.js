@@ -51,3 +51,42 @@ export async function updateInfo({ id, role, address, description, image }) {
     throw new Error(error.response.data.message);
   }
 }
+export async function updatePassword({
+  id,
+  role,
+  password,
+  passwordConfirmation: password_confirmation,
+}) {
+  const data = {
+    password,
+    password_confirmation,
+  };
+  const formdata = new FormData();
+  for (const key in data) {
+    if (data[key]) formdata.append(key, data[key]);
+  }
+  let response;
+  try {
+    if (role == "client") {
+      response = await apiPrivate.post(
+        `/api/client/update-info?client_id=${id}`,
+        formdata,
+      );
+    } else {
+      response = await apiPrivate.post(
+        `/api/craftsman/update-info?craftsman_id=${id}`,
+        formdata,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+    }
+    const data = response.data;
+    console.data;
+    return data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}

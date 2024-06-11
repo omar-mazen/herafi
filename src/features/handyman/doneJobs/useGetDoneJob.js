@@ -5,7 +5,7 @@ import { getDoneJob } from "../../../services/handyman/doneJobs";
 export default function useGetDoneJob() {
   const { id } = useParams();
   const { data, isLoading } = useQuery({
-    queryKey: [`done-job`],
+    queryKey: [`done-job`, id],
     queryFn: () => getDoneJob({ jobId: id }),
   });
   return { isLoading, data };
