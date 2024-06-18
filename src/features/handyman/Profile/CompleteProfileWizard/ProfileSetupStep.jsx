@@ -50,7 +50,7 @@ export default function ProfileSetupStep() {
         عنوان العمل :
       </p>
       {/* address */}
-      <div className="grid grid-cols-2 grid-rows-2 gap-5 sm:grid-cols-3 sm:grid-rows-1">
+      <div className="grid grid-cols-2 grid-rows-2 gap-5 md:grid-cols-3 md:grid-rows-1">
         <SelectOption
           selectedValue={gov}
           setSelectedValue={(gov) => dispatch(setGovernorates(gov))}
@@ -64,7 +64,7 @@ export default function ProfileSetupStep() {
           options={getCities(gov)}
           disable={!gov}
         />
-        <div className=" col-start-1 col-end-3 min-w-72 sm:col-start-3 sm:col-end-4">
+        <div className=" col-start-1 col-end-3 min-w-72 md:col-start-3 md:col-end-4">
           <Input
             required={true}
             autoComplete="street-address"
@@ -80,7 +80,7 @@ export default function ProfileSetupStep() {
       </p>
       <TextArea
         value={bio}
-        setValue={(e) => dispatch(setBio(e.target.value))}
+        setValue={(e) => dispatch(setBio(e))}
         placeholder="اكتب نبذة عنك..."
       />
     </div>

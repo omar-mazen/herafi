@@ -14,15 +14,15 @@ const CompleteProfileContext = createContext();
 
 const initialState = {
   craft: "",
-  profilePic: "",
-  profilePicPreview: "",
+  profilePic: null,
+  profilePicPreview: null,
   gov: "",
   city: "",
   street: "",
   bio: "",
   phones: [],
   whatsapp: [],
-  workLocations: {},
+  workLocations: [],
 };
 
 // action creator
@@ -54,9 +54,9 @@ const editContact = (index, type, value) => ({
   payload: { index, type, value },
 });
 const deleteContact = (index) => ({ type: "DELETE_CONTACTS", payload: index });
-const setWorkLocation = (gov, cities) => ({
+const setWorkLocation = (cities) => ({
   type: "SET_WORK_LOCATIONS",
-  payload: { gov, cities },
+  payload: { cities },
 });
 const deleteAllCitiesInGovernorate = (payload) => ({
   type: "DELETE_WORK_CITIES",
@@ -93,11 +93,10 @@ function reducer(state, action) {
         if (i == index) {
           if (checkDuplicates(state.contacts, type, value))
             return {
-              ...contact,
               [type]: value,
               error: "لقد قمت بإضافة هذا الرقم بالفعل.",
             };
-          else return { ...contact, [type]: value, error: null };
+          else return { [type]: value, error: null };
         }
         if (contact[type] === value) {
           return { ...contact, error: "لقد قمت بإضافة هذا الرقم بالفعل." };
@@ -116,13 +115,12 @@ function reducer(state, action) {
         contacts: [...state.contacts.filter((_, i) => i != payload)],
       };
     case "SET_WORK_LOCATIONS":
+      console.log(payload.cities);
       return {
         ...state,
-        workLocations: [
-          ...state.workLocations,
-          ...(state.workLocations[payload.gov] || []),
-          ...payload.cities,
-        ],
+        workLocations: state.workLocations.includes(payload.cities[0])
+          ? state.workLocations.filter((city) => city != payload.cities[0])
+          : [...state.workLocations, ...payload.cities],
       };
     case "DELETE_WORK_CITIES":
       return {
@@ -147,7 +145,7 @@ export default function CompleteProfileWizard({
   const [state, dispatch] = useReducer(reducer, {
     craft: user?.craft || null,
     profilePic: null,
-    profilePicPreview: `${user?.image ? imgBaseURL + user?.image : null}`,
+    profilePicPreview: user?.image ? imgBaseURL + user?.image : null,
     gov: user?.address?.split(",")[0]?.trim() || "",
     city: user?.address?.split(",")[1]?.trim() || "",
     street: user?.address?.split(",")[2]?.trim() || "",
@@ -172,7 +170,7 @@ export default function CompleteProfileWizard({
     isLoading: addPhonesIsLoading,
     isSuccess: addPhonesIsSuccess,
   } = useAddPhones();
-  console.log(phones);
+  console.log(state);
   return (
     <CompleteProfileContext.Provider
       value={{

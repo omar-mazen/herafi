@@ -3,20 +3,23 @@ import Button from "../../../ui/Button";
 import { format } from "date-fns";
 import PhoneIcon from "../../../icons/PhoneIcon";
 import UserIcon from "../../../icons/UserIcon";
-import useGetActiveJob from "./useGetActiveJob";
 import FullPageLoading from "../../../ui/FullPageLoading";
-import useFinishJob from "./useFinishJob";
 import Modal from "../../../ui/Modal";
 import Rating from "../../../ui/Rating";
 import TextArea from "../../../ui/TextArea";
 import { useState } from "react";
 import { imgBaseURL } from "../../../util/constatnt";
+import useGetActiveJob from "../../handyman/activeJobs/useGetActiveJob";
+import useClientFinishJob from "./useClientFinishJob";
+import CameraIcon from "../../../icons/CameraIcon";
+import XIcon from "../../../icons/XIcon";
 
-export default function ActiveJob() {
+export default function ClientActiveJob() {
   const { isLoading, data } = useGetActiveJob();
-  const { finishJob, isLoading: finishingJob } = useFinishJob();
+  const { finishJob, isLoading: finishingJob } = useClientFinishJob();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [images, setImages] = useState([]);
   if (isLoading) return <FullPageLoading />;
   console.log(rating, comment);
   console.log(data);
@@ -126,16 +129,77 @@ export default function ActiveJob() {
         </div>
       </div>
       <Modal.Window name={"finsh"}>
-        <div className="flex flex-col items-center gap-10">
-          <p className="text-h3">تقيمك للعميل</p>
+        <div className="max-w-[420px] space-y-10">
+          <p className="text-center text-h3">تقيمك للحرفي</p>
           <Rating rating={rating} setRating={setRating} size={30} />
           <TextArea min={1} value={comment} setValue={setComment} />
+          <div
+            style={{
+              gridTemplateColumns: `repeat(${images.length + 1},100px)`,
+            }}
+            className="grid max-w-[410px] grid-rows-[100px] gap-5 overflow-y-hidden overflow-x-scroll pb-5 "
+          >
+            <div
+              className=" relative h-full w-full cursor-pointer overflow-hidden rounded-lg bg-secondary-background "
+              disabled={images.length >= 5}
+              style={{ opacity: `${images.length >= 5 ? "50%" : "100%"}` }}
+            >
+              <div className="flex h-full w-full items-center justify-center">
+                <span className="flex aspect-square h-16 items-center justify-center rounded-full bg-primary-color">
+                  <CameraIcon size={15} />
+                </span>
+              </div>
+              <input
+                type="file"
+                accept="image/png, image/jpeg"
+                style={{ opacity: "0" }}
+                className=" absolute left-0 top-0 h-full w-full cursor-pointer overflow-hidden opacity-0"
+                title=""
+                disabled={images.length >= 5}
+                onChange={(e) => {
+                  const files = e.target.files;
+                  for (const file of files) {
+                    if (images.length >= 5) return;
+                    setImages((imgs) => {
+                      if (imgs?.length < 5)
+                        return [
+                          ...imgs,
+                          { img: file, imgPreview: URL.createObjectURL(file) },
+                        ];
+                      else return imgs;
+                    });
+                  }
+                }}
+              />
+            </div>
+            {images?.map((img, i) => (
+              <div key={i} className="relative px-1">
+                <img
+                  src={img.imgPreview}
+                  className=" h-[100px] w-[100px] rounded-xl object-cover"
+                />
+                <span
+                  className=" absolute right-1 top-1 cursor-pointer rounded-full bg-[rgb(0,0,0,0.5)] p-1 text-white"
+                  onClick={() => {
+                    setImages((imgs) =>
+                      imgs.filter((x) => x.imgPreview != img.imgPreview),
+                    );
+                  }}
+                >
+                  <XIcon size={15} />
+                </span>
+              </div>
+            ))}
+          </div>
           <Button
             size="block"
             disabled={finishingJob}
             onClick={() => {
-              console.log("clicked");
-              finishJob({ comment, rating });
+              finishJob({
+                comment,
+                rating,
+                images: images.map((image) => image.img),
+              });
             }}
           >
             انهاء

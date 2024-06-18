@@ -37,6 +37,7 @@ export async function updatePhones({ id, phones, whatsapp }) {
     const data = response.data;
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error(error.response.data.message);
   }
 }

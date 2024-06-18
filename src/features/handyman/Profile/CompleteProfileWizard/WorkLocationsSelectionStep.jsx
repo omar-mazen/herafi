@@ -43,21 +43,6 @@ export default function WorkLocationsSelectionStep() {
             </div>
             {expandedGov == gov && (
               <ul className=" space-y-3 border-t border-text-color/20 py-5 text-medium ">
-                <li className="flex items-center gap-3 font-semibold text-primary-color">
-                  <input
-                    type="checkbox"
-                    checked={selectAll}
-                    value={selectAll}
-                    onChange={() => {
-                      const allCities = getCities(gov);
-                      if (!selectAll) dispatch(setWorkLocation(allCities));
-                      else dispatch(deleteAllCitiesInGovernorate(allCities));
-                      setSelectAll((status) => !status);
-                    }}
-                    className="accent-success-color"
-                  />
-                  <label>كل الأحياء</label>
-                </li>
                 {/* list of cities for current gov */}
                 {getCities(gov).map((city, i) => (
                   <li key={i} className="flex gap-3">

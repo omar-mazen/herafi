@@ -17,7 +17,7 @@ export default function ConfirmDelete({
           size="small"
           onClick={() => {
             onConfirm();
-            onCloseModal();
+            // onCloseModal();
           }}
         >
           حذف

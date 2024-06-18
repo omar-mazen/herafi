@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { createContext } from "react";
 import useClickOutside from "../hooks/useClickOutside";
 import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 
 const MenuContext = createContext();
 
@@ -66,8 +67,33 @@ function List({ children, name }) {
     document.body,
   );
 }
-function Item({ children, icon, onClick }) {
+function Item({ children, icon, onClick, to = null }) {
   const { close } = useMenu();
+  if (to)
+    return (
+      <li
+        onClick={() => {
+          onClick?.();
+          close();
+        }}
+      >
+        <Link
+          to={to}
+          className={`grid cursor-pointer ${icon ? "grid-cols-[30px,1fr]" : "grid-cols-1"} line-clamp-2 items-center gap-3 text-small hover:backdrop-brightness-90`}
+        >
+          {icon && (
+            <span className="m-auto self-center justify-self-start">
+              {icon}
+            </span>
+          )}
+          <p
+            className={`h-full w-full max-w-full ${icon ? "" : "px-6"} py-6 transition-all duration-100 ease-in-out`}
+          >
+            {children}
+          </p>
+        </Link>
+      </li>
+    );
   return (
     <li
       onClick={() => {

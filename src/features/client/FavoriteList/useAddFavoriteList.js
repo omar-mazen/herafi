@@ -10,7 +10,7 @@ export default function useAddFavoriteList() {
     mutationKey: ["favoriteLists"],
     mutationFn: ({ title, description }) => {
       addFavoriteListApi({ id, title, description });
-      queryClient.resetQueries({ queryKey: ["favoriteLists"] });
+      queryClient.refetchQueries({ queryKey: ["favoriteLists"] });
     },
     onSuccess: () => toast.success("تم اضافة القائمة الي قوائمك بنجاح."),
     onError: () => toast.error("لم يتم اضافة القائمة ,حاول مره اخري!"),

@@ -3,15 +3,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { deleteSpecialImg as deleteSpecialImgApi } from "../../../../services/handyman/specialImages";
 
-export default function useAddSpecialImgs() {
+export default function useDeleteSpecialImgs() {
   const { id } = useAuth();
   const queryClient = useQueryClient();
   const { mutate, isPending: isLoading } = useMutation({
-    mutationKey: ["specialImages"],
+    mutationKey: ["specialImages", id],
     mutationFn: (imgId) => deleteSpecialImgApi({ handymanId: id, imgId }),
     onSuccess: () => {
       toast.success("تم حذف الصورة من صورك المميزه.");
-      queryClient.refetchQueries(["specialImages"]);
+      queryClient.refetchQueries(["specialImages", id]);
     },
     onError: () =>
       toast.error(

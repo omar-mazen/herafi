@@ -15,6 +15,11 @@ import TrashIcon from "../../ui/TrashIcon";
 import ThreeDots from "../../icons/ThreeDots";
 import Menu from "../../ui/Menu";
 import useDeleteList from "../../features/client/FavoriteList/useDeleteList";
+import {
+  differenceInDays,
+  differenceInMonths,
+  differenceInYears,
+} from "date-fns";
 
 export default function FavoriteList() {
   const { isLoading, data, isFetched } = useGetFavoriteList();
@@ -73,8 +78,14 @@ function HandymanCard({ handyman, listName }) {
     craftsman_image: img,
     craftsman_name: name,
     number_of_ratings: numberOfRatings,
+    craftsman_created_at,
   } = handyman;
   const { deleteFromList } = useDeleteFromList();
+  const joinDate = {
+    inYear: differenceInYears(Date.now(), craftsman_created_at),
+    inMonth: differenceInMonths(Date.now(), craftsman_created_at),
+    inDay: differenceInDays(Date.now(), craftsman_created_at),
+  };
   return (
     <>
       <div className=" relative flex w-[200px] flex-col items-start rounded-lg bg-secondary-background px-12 py-6">
@@ -105,7 +116,14 @@ function HandymanCard({ handyman, listName }) {
           </div>
           <div className="flex items-center gap-3 self-start ">
             <UserClockIcon />
-            <span className=" text-text-color">منضم منذ 3 سنوات</span>
+            <span className=" text-text-color">
+              منضم منذ
+              {joinDate?.inYear
+                ? ` ${joinDate?.inYear} سنه `
+                : joinDate?.inMonth
+                  ? ` ${joinDate?.inMonth} شهر `
+                  : ` ${joinDate?.inDay} يوم `}
+            </span>
           </div>
         </div>
       </div>

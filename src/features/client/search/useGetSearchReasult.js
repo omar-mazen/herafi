@@ -14,7 +14,16 @@ export default function useGetSearchReasult() {
   const date = seachParams.get("min_join_years");
   const numberOfDoneJobs = seachParams.get("done_jobs");
   const { data: results, isLoading } = useQuery({
-    queryKey: [`search-${query}-${sort}-${page}-${Math.random}`],
+    queryKey: [
+      `search`,
+      query,
+      sort,
+      cities,
+      rating,
+      date,
+      numberOfDoneJobs,
+      page,
+    ],
     queryFn: () =>
       searchByCraft({
         query,

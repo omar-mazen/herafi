@@ -11,15 +11,9 @@ export default function useLogout() {
   const { isPending: isLoading, mutate: logout } = useMutation({
     mutationFn: async () => {
       queryClient.clear();
-      deleteCookie("token");
+      await deleteCookie("token");
       window.location.reload();
     },
-    // onSuccess: async () => {
-    //   queryClient.clear();
-    //   deleteCookie("token")
-    //   navigate(`/`);
-    // },
-    // onError: (error) => toast.error(error.message),
   });
   return { logout, isLoading };
 }

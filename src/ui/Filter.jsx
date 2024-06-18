@@ -34,7 +34,6 @@ function Rating() {
   function handleMinRating(number) {
     searchParams.set("min_rating", number);
     setSearchParams(searchParams, { replace: true });
-    window.location.reload();
   }
 
   return (
@@ -136,7 +135,6 @@ function Governorates() {
     setSearchParams(searchParams, { replace: true });
     searchParams.delete("city");
     setSearchParams(searchParams, { replace: true });
-    window.location.reload();
   }
 
   function handleAddCities(e) {
@@ -152,7 +150,6 @@ function Governorates() {
       searchParams.append("city", e.target.value);
     }
     setSearchParams(searchParams, { replace: true });
-    window.location.reload();
   }
 
   // function handleSellectAll() {
@@ -252,7 +249,6 @@ function JoinDate() {
   function handleJoinDate(e) {
     searchParams.set("min_join_years", e.target.value);
     setSearchParams(searchParams, { replace: true });
-    window.location.reload();
   }
   return (
     <div className="py-5">

@@ -4,12 +4,13 @@ import CompleteProfileWizard from "../features/handyman/Profile/CompleteProfileW
 
 export default function ProtectedRoutes({ allowedRole }) {
   const { isAuth, role, user } = useAuth();
-  if (user?.role == "handyman")
+  if (role == "handyman")
     if (
-      !user?.craft ||
-      !user?.cities?.length > 0 ||
-      !user?.phones?.length > 0 ||
-      (!user?.description && !user?.address && !user?.image)
+      user?.name &&
+      (!user?.craft ||
+        !user?.cities?.length > 0 ||
+        !user?.phones?.length > 0 ||
+        (!user?.description && !user?.address && !user?.image))
     )
       return (
         <CompleteProfileWizard
@@ -21,7 +22,7 @@ export default function ProtectedRoutes({ allowedRole }) {
       );
   return allowedRole?.includes(role) ? (
     <Outlet />
-  ) : isAuth ? (
+  ) : isAuth && user?.name ? (
     //user authorized but not have access to the requested page
     <p>ليس لدك صلاحية الوصول الي هذه الصفحة.</p>
   ) : (

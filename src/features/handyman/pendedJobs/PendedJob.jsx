@@ -20,6 +20,7 @@ import FullPageLoading from "../../../ui/FullPageLoading";
 import NotFound from "../../../ui/NotFound";
 import { joinDate } from "../../../util/helper";
 import { useState } from "react";
+import { imgBaseURL } from "../../../util/constatnt";
 
 export default function PendedJob() {
   const { data, isLoading, isFetched } = useGetPendedJob();
@@ -87,42 +88,21 @@ export default function PendedJob() {
           <p className="mt-5">{data[0]?.description}</p>
         </div>
         <div className="flex gap-5 overflow-scroll py-2">
-          <div className="w-32 min-w-32">
-            <figure className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color">
-              <img
-                src="/public/work1.jpeg"
-                alt=""
-                className=" h-full w-full object-cover object-center"
-              />
-            </figure>
-          </div>
-          <div className="w-32 min-w-32">
-            <figure className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color">
-              <img
-                src="/public/work2.webp"
-                alt=""
-                className=" h-full w-full object-cover object-center"
-              />
-            </figure>
-          </div>
-          <div className="w-32 min-w-32">
-            <figure className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color">
-              <img
-                src="/public/work3.jpeg"
-                alt=""
-                className=" h-full w-full object-cover object-center"
-              />
-            </figure>
-          </div>
-          <div className="w-32 min-w-32">
-            <figure className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color">
-              <img
-                src="/public/work4.jpg"
-                alt=""
-                className=" h-full w-full object-cover object-center"
-              />
-            </figure>
-          </div>
+          {data?.images?.map((img, i) => {
+            const imageUrl = `${imgBaseURL}${img.image}`;
+
+            return (
+              <div key={i} className="w-32 min-w-32">
+                <figure className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color">
+                  <img
+                    src={imageUrl}
+                    alt=""
+                    className=" h-full w-full object-cover object-center"
+                  />
+                </figure>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

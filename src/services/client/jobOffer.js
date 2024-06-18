@@ -49,9 +49,10 @@ export async function acceptJobOffer({ handymanId, jobOfferId }) {
   console.log(handymanId, jobOfferId);
   try {
     await apiPrivate.post(
-      `/api/client/add_job?craftsman_id=${handymanId}&job_offer_id=${jobOfferId}`,
+      `/api/craftsman/add_job?craftsman_id=${handymanId}&job_offer_id=${jobOfferId}`,
     );
   } catch (error) {
+    console.log(error);
     throw new Error(error.response.data.message);
   }
 }

@@ -433,3 +433,9 @@ table .fc-scrollgrid {
   background-size: contain;
   z-index: 2;
 }
+.slick-slide > div {
+  display: grid;
+  place-items: center;
+  margin: auto;
+  padding: 0px;
+}

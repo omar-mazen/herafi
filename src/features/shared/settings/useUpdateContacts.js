@@ -8,7 +8,7 @@ export default function useUpdateContacts() {
     isSuccess,
     isPending: isLoading,
   } = useMutation({
-    mutationKey: ["user-contacts"],
+    mutationKey: ["user"],
     mutationFn: updatePhones,
     onSuccess: () => toast.success("تم تحديث وسائل التواصل الخاصه بك بنجاح."),
     onMutate: () =>

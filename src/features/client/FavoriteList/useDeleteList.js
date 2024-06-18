@@ -15,7 +15,7 @@ export default function useDeleteList() {
       }),
     onSuccess: () => {
       navigate("/client/favorites", { replace: true });
-      queryClient.resetQueries(["favoriteLists"]);
+      queryClient.refetchQueries(["favoriteLists"]);
       toast.success("تم حذف القائمه بنجاح.");
     },
     onError: () => toast.success("عذراً، يبدو أن هناك خطأ. حاول مرة اخري!"),

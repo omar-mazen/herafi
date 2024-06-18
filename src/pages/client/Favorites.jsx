@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import useGetAllFavoriteLists from "../../features/client/FavoriteList/useGetAllFavoriteLists";
 import FullPageLoading from "../../ui/FullPageLoading";
 import useAddFavoriteList from "../../features/client/FavoriteList/useAddFavoriteList";
+import { imgBaseURL } from "../../util/constatnt";
 export default function Favorites() {
   const { data, isLoading } = useGetAllFavoriteLists();
   if (isLoading) return <FullPageLoading />;
@@ -25,7 +26,7 @@ export default function Favorites() {
           </Modal.Open>
         </div>
         <div className=" mt-20 grid grid-cols-[repeat(auto-fit,200px)] items-center gap-10">
-          {data?.length == 0 && (
+          {!data?.length && (
             <Modal.Open opens={"add list"}>
               <span className=" aspect-square h-full cursor-pointer rounded-lg bg-secondary-background">
                 <span className=" relative flex aspect-square h-full cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-secondary-background transition-all duration-100 ease-in-out before:absolute before:left-1/2 before:top-1/2 before:z-[1] before:h-2 before:w-2 before:translate-x-[-50%] before:translate-y-[-50%] before:rotate-180 before:rounded-lg before:bg-text-color/10 before:transition-all before:duration-500 before:ease-in-out hover:before:h-full hover:before:w-full hover:before:rotate-0">
@@ -43,10 +44,16 @@ export default function Favorites() {
                   to={`${list.id}`}
                   className=" grid aspect-square h-full cursor-pointer grid-cols-2 grid-rows-2 content-center items-center justify-center justify-items-center rounded-lg bg-secondary-background"
                 >
-                  <ProfilePic size="md" />
-                  <ProfilePic size="md" />
-                  <ProfilePic size="md" />
-                  <ProfilePic size="md" />
+                  {list.craftsmen.map((craftsman, i) => (
+                    <ProfilePic
+                      title={craftsman.name}
+                      size="md"
+                      src={
+                        craftsman.image ? imgBaseURL + craftsman.image : null
+                      }
+                      key={i}
+                    />
+                  ))}
                 </Link>
                 <p className=" mt-5 text-large font-semibold">{list.title}</p>
               </div>
@@ -83,7 +90,7 @@ function AddNewListWindow({ onCloseModal }) {
                 message: "يجب الا يقل العنوان عن 3 حروف.",
               },
               maxLength: {
-                value: 8,
+                value: 30,
                 message: "يجب الا يزيد العنوان عن 30 حرف.",
               },
             }),
@@ -98,8 +105,8 @@ function AddNewListWindow({ onCloseModal }) {
             ...register("desc", {
               required: true,
               minLength: {
-                value: 50,
-                message: "يجب الا يقل الوصف عن 50 حرف.",
+                value: 30,
+                message: "يجب الا يقل الوصف عن 30 حرف.",
               },
               maxLength: {
                 value: 500,

@@ -1,6 +1,6 @@
 import UserDefaulPictureIcon from "../icons/UserDefaulPictureIcon";
 
-export default function ProfilePic({ src = "", size = "sm" }) {
+export default function ProfilePic({ src, size = "sm", title = null }) {
   const imgSize = {
     sm: 25,
     md: 50,
@@ -10,6 +10,7 @@ export default function ProfilePic({ src = "", size = "sm" }) {
   return (
     <figure
       className={`overflow-hidden rounded-full`}
+      title={title}
       style={{ height: imgSize[size], width: imgSize[size] }}
     >
       {src ? (

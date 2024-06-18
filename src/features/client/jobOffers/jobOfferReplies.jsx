@@ -123,8 +123,8 @@ function ReplyCard({
       <div className="mt-5 text-medium">
         <span className=" pl-3 text-gray">السعر :</span>
         <span className=" pl-2 font-bold text-primary-color">{price}</span>
-        <span className="pl-2">لكل</span>
-        <span>{unit}</span>
+        <span className=" inline-block pl-2">{` لكل `}</span>
+        <span className=" inline-block "> {unit}</span>
       </div>
       <div className="mt-5 flex items-center justify-end gap-5">
         <Button additionalStyle={` !bg-success-color`}>قبول</Button>

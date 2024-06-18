@@ -7,11 +7,11 @@ export default function useAddSpecialImgs() {
   const { id } = useAuth();
   const queryClient = useQueryClient();
   const { mutate, isPending: isLoading } = useMutation({
-    mutationKey: ["specialImages"],
+    mutationKey: ["specialImages", id],
     mutationFn: (images) => addSpecialImgApi({ id, images }),
     onSuccess: () => {
       toast.success("تمت الاضافة الي صورك المميزه");
-      queryClient.refetchQueries(["specialImages"]);
+      queryClient.refetchQueries(["specialImages", id]);
     },
     onError: () =>
       toast.error(

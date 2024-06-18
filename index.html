@@ -12,9 +12,39 @@
     />
     <link rel="icon" href="favicon.png" type="image/x-icon" />
     <title>حِرَفي</title>
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script
+      src="https://apis.google.com/js/platform.js?onload=renderButton"
+      async
+      defer
+    ></script>
+    <meta
+      name="google-signin-client_id"
+      content="338014147339-mg1etbpd9s25fhim7hrn3iqaf29in5lo.apps.googleusercontent.com
+.apps.googleusercontent.com"
+    />
   </head>
   <body class="select-none bg-primary-background text-small text-text-color">
-    <div id="root" class=""></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "476481078155293",
+          xfbml: true,
+          version: "v20.0",
+        });
+      };
+    </script>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js"
+    ></script>
+    <div id="root" class="">
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+    <div id="fb-root"></div>
   </body>
+  <script type="module" src="/src/main.jsx"></script>
 </html>

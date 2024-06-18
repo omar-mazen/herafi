@@ -28,7 +28,6 @@ import PendedJobs from "./features/handyman/pendedJobs/PendedJobs";
 import PendedJob from "./features/handyman/pendedJobs/PendedJob";
 import JobOfferWizard from "./features/client/AddJobOffer/JobOfferWizard";
 import JobOfferReplies from "./features/client/jobOffers/jobOfferReplies";
-import FullPageLoading from "./ui/FullPageLoading";
 import JobOffer from "./features/client/jobOffers/jobOffer";
 import ActiveJob from "./features/handyman/activeJobs/ActiveJob";
 import ActiveJobs from "./features/handyman/activeJobs/ActiveJobs";
@@ -42,6 +41,12 @@ import {
 } from "./services/client/favorites";
 import PublicHome from "./pages/shared/PublicHome";
 import ClientHome from "./pages/client/ClientHome";
+import { GoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
+import FacebookLogin from "@greatsumini/react-facebook-login";
+import FacebookIcon from "./icons/FacebookIcon";
+import ClientActiveJobs from "./features/client/ActiveJobs/ClietnActiveJobs";
+import ClientActiveJob from "./features/client/ActiveJobs/ClientActiveJob";
+import ClientRating from "./features/client/Rating/ClientRating";
 
 function App() {
   const { crafts } = useGetAllCrafts();
@@ -58,12 +63,12 @@ function App() {
         path="client/*"
         element={<ProtectedRoutes allowedRole={["client"]} />}
       >
-        <Route index element={<p>client home</p>} />
-        <Route path="home" element={<p>client home</p>} />
+        <Route index element={<ClientHome />} />
+        <Route path="home" element={<ClientHome />} />
         <Route path="search" element={<Search />} />
         <Route path="favorites" element={<Favorites />} />
         <Route path="favorites/:listId" element={<FavoriteList />} />
-        <Route path={`client/${id}/settings`} element={<Settings />}>
+        <Route path={`client/:id/settings`} element={<Settings />}>
           <Route index element={<Navigate to={"update-account"} replace />} />
           <Route path="update-account" element={<AccountSettings />} />
           <Route path="update-password" element={<UpdatePassword />} />
@@ -74,6 +79,13 @@ function App() {
           <Route path=":id/replies" element={<JobOfferReplies />} />
         </Route>
         <Route path="job-offers" element={<JobOffers />} />
+        <Route path="jobs">
+          <Route path="active" element={<ClientActiveJobs />} />
+        </Route>
+        <Route path="job">
+          <Route path="active/:id" element={<ClientActiveJob />} />
+        </Route>
+        <Route path="rating/:id" element={<ClientRating />} />
       </Route>
     </>
   );
@@ -134,7 +146,7 @@ function App() {
           {handymanRoutes}
           {sharedRoutes}
           <Route path="home" element={<ClientHome />}></Route>
-          <Route path="test"></Route>
+          <Route path="test" element={<SocialLogin />}></Route>
         </Route>
         <Route
           path="*"
@@ -148,5 +160,59 @@ function App() {
     </BrowserRouter>
   );
 }
-
+function SocialLogin() {
+  useGoogleOneTapLogin({
+    onSuccess: (credentialResponse) => {
+      console.log(credentialResponse);
+    },
+    onError: () => {
+      console.log("Login Failed");
+    },
+  });
+  return (
+    <>
+      <div>
+        <GoogleLogin
+          shape="pill"
+          size="large"
+          theme="filled_blue"
+          width={280}
+          onSuccess={(cer) => console.log(cer)}
+        ></GoogleLogin>
+      </div>
+      <FacebookLogin
+        appId="476481078155293"
+        onSuccess={(response) => {
+          console.log("Login Success!", response);
+        }}
+        onFail={(error) => {
+          console.log("Login Failed!", error);
+        }}
+        onProfileSuccess={(response) => {
+          console.log("Get Profile Success!", response);
+        }}
+      >
+        <button
+          style={{
+            fontFamily: "Google Sans,arial,sans-serif",
+            fontWeight: 500,
+            fontSize: "15px",
+          }}
+          type="button"
+          className="relative mt-10 flex h-[40px] w-[280px] items-center gap-[12px] rounded-full bg-[#0866FF] transition-all duration-100 hover:brightness-150"
+        >
+          <span className=" flex items-center justify-center pr-1">
+            <span className="rounded-full bg-white p-3 text-[#0866FF]">
+              <FacebookIcon size={20} />
+            </span>
+          </span>
+          <span className="">
+            تسجيل الدخول باستخدام
+            <span className=""> Facebook</span>
+          </span>
+        </button>
+      </FacebookLogin>
+    </>
+  );
+}
 export default App;

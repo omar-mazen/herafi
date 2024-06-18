@@ -18,7 +18,10 @@ export function getCookie(key) {
   return null;
 }
 export function deleteCookie(key) {
-  document.cookie = `${key}=;`;
+  return new Promise((res, rej) => {
+    document.cookie = `${key}=;`;
+    res();
+  });
 }
 export function joinDate({ date }) {
   const joinDate = {

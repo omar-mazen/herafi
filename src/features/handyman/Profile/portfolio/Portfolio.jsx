@@ -13,6 +13,7 @@ import FormInput from "../../../../ui/FormInput";
 import useGetPortfolio from "./useGetPortfolio";
 import { imgBaseURL } from "../../../../util/constatnt";
 import SmallSpinner from "../../../../ui/SmallSpinner";
+import Pagenation from "../../../../ui/Pagenation";
 
 export function Portfolio() {
   const { id } = useParams();
@@ -46,16 +47,19 @@ export function Portfolio() {
           </div>
         )}
         {portfolio?.portfolio.length > 0 ? (
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,250px))] gap-10 ">
-            {portfolio?.portfolio?.map((portfolio, i) => (
-              <PortfolioElement
-                key={i}
-                imgs={portfolio.images}
-                title={portfolio.title}
-                description={portfolio.description}
-              />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,250px))] gap-10 ">
+              {portfolio?.portfolio?.map((portfolio, i) => (
+                <PortfolioElement
+                  key={i}
+                  imgs={portfolio.images}
+                  title={portfolio.title}
+                  description={portfolio.description}
+                />
+              ))}
+            </div>
+            <Pagenation total={portfolio.latestPage} />
+          </>
         ) : (
           !portfolioLoading && (
             <p className=" text-medium">لا يوجد مشاريع في معرض الاعمال</p>

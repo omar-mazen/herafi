@@ -1,10 +1,10 @@
 import { apiPrivate } from "../shared/axios";
 
-export async function getAllAciveJobs({ id, pageSize, page }) {
+export async function getAllClientAciveJobs({ id, pageSize, page }) {
   let response;
   try {
     response = await apiPrivate.post(
-      `api/craftsman/get_jobs?craftsman_id=${id}&pagination=${pageSize}&page=${page}`,
+      `/api/client/get_active_jobs?client_id=${id}&pagination=${pageSize}&page=${page}`,
     );
     const data = await response.data.data;
     return {
@@ -16,27 +16,22 @@ export async function getAllAciveJobs({ id, pageSize, page }) {
     throw new Error(error.response.data.message);
   }
 }
-export async function getAciveJob({ jobId }) {
-  let response;
-  try {
-    response = await apiPrivate.post(`api/craftsman/get_job?job_id=${jobId}`);
-    const data = await response.data.data;
-    return data[0];
-  } catch (error) {
-    console.log(error);
-    throw new Error(error.response.data.message);
-  }
-}
-export async function handymanFinishJob({
+export async function ClientFinishJob({
   handymanId,
   jobId,
   rating,
   comment,
+  images,
 }) {
+  let formData = new FormData();
+  formData.append("rating", rating);
+  formData.append("comment", comment);
+  if (images.length > 0)
+    for (const image of images) formData.append("image[]", image);
   let response;
   try {
     response = await apiPrivate.post(
-      `api/craftsman/finish_job?craftsman_id=${handymanId}&active_job_id=${jobId}`,
+      `/api/client/finish_job?client_id=${handymanId}&active_job_id=${jobId}`,
       { rating, comment },
     );
     console.log(response);

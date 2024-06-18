@@ -15,10 +15,12 @@ import Menu from "./Menu";
 import useLogout from "../features/shared/Authentication/useLogout";
 import XIcon from "../icons/XIcon";
 import { useState } from "react";
+import { imgBaseURL } from "../util/constatnt";
+import SettingIcon from "../icons/SettingIcon";
 
 export default function NavBar() {
   const { theme, themeToggle } = useTheme();
-  const { role, isAuth, id } = useAuth();
+  const { role, isAuth, id, user } = useAuth();
   const { logout } = useLogout();
   const [isMenuOpen, setMenuOpen] = useState(false);
   return (
@@ -129,9 +131,28 @@ export default function NavBar() {
             </span>
             <Menu fixedPosition={true}>
               <Menu.Toggle name={"userActionsMenu"}>
-                <ProfilePic size="sm" />
+                <ProfilePic
+                  size="sm"
+                  src={user?.image ? imgBaseURL + user.image : null}
+                />
               </Menu.Toggle>
               <Menu.List name={"userActionsMenu"}>
+                {role == "handyman" && (
+                  <Menu.Item
+                    to={`/handyman/${id}/`}
+                    icon={
+                      <ProfilePic
+                        size="sm"
+                        src={user?.image ? imgBaseURL + user.image : null}
+                      />
+                    }
+                  >
+                    حسابي
+                  </Menu.Item>
+                )}
+                <Menu.Item icon={<SettingIcon />} to={`/settings/`}>
+                  اعدادات الحساب
+                </Menu.Item>
                 <Menu.Item icon={<LogoutIcon />} onClick={logout}>
                   تسجيل الخروج
                 </Menu.Item>
@@ -168,7 +189,7 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
         {role == "handyman" && (
           <>
             <ul className=" mt-10 text-medium">
-              <li className="">
+              <li className="" onClick={close}>
                 <Link
                   to={"handyman/jobs/new"}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
@@ -176,7 +197,8 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
                   المهام الجديده
                 </Link>
               </li>
-              <li className="">
+              <li className="" onClick={close}>
+                {" "}
                 <Link
                   to={"handyman/jobs/active"}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
@@ -184,7 +206,8 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
                   المهام النشطه
                 </Link>
               </li>
-              <li className="">
+              <li className="" onClick={close}>
+                {" "}
                 <Link
                   to={"handyman/jobs/pended"}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
@@ -192,7 +215,8 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
                   المهام المعلقه
                 </Link>
               </li>
-              <li className="">
+              <li className="" onClick={close}>
+                {" "}
                 <Link
                   to={"handyman/jobs/done"}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
@@ -202,7 +226,8 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
               </li>
             </ul>
             <ul className="mt-10 text-medium">
-              <li className="">
+              <li className="" onClick={close}>
+                {" "}
                 <Link
                   to={`/handyman/${id}`}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
@@ -222,7 +247,8 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
         {role == "client" && (
           <>
             <ul className=" mt-10 text-medium">
-              <li className="">
+              <li className="" onClick={close}>
+                {" "}
                 <Link
                   to={"client/job-offer/add"}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
@@ -230,7 +256,8 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
                   ابدأ مشروعك الآن
                 </Link>
               </li>
-              <li className="">
+              <li className="" onClick={close}>
+                {" "}
                 <Link
                   to={"client/job-offers/"}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
@@ -240,16 +267,20 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
               </li>
             </ul>
             <ul className="mt-10 text-medium">
-              <li className="">
+              <li className="" onClick={close}>
+                {" "}
                 <Link
-                  to={`/handyman/${id}`}
+                  to={`/client/${id}/settings`}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
                 >
                   اعدادات الحساب
                 </Link>
               </li>
               <li
-                onClick={logout}
+                onClick={() => {
+                  close();
+                  logout();
+                }}
                 className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
               >
                 تسجيل الخروج

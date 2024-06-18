@@ -14,6 +14,8 @@
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/react": "^6.1.11",
     "@fullcalendar/scrollgrid": "^6.1.11",
+    "@greatsumini/react-facebook-login": "^3.3.3",
+    "@react-oauth/google": "^0.12.1",
     "@tanstack/react-query": "^5.25.0",
     "@tanstack/react-query-devtools": "^5.35.1",
     "axios": "^1.6.7",

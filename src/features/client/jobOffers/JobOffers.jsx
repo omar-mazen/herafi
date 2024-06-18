@@ -10,14 +10,13 @@ import Table from "../../../ui/Table";
 import TrashIcon from "../../../ui/TrashIcon";
 import useGetAllJobOffers from "./useGetAllJobOffers";
 import useDeleteJobOffer from "./useDeleteJobOffer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function JobOffers() {
   const navigate = useNavigate();
   const { data, isLoading } = useGetAllJobOffers();
-  const { deleteJobOffer, isLoading: isDeleting } = useDeleteJobOffer();
+  const { deleteJobOffer } = useDeleteJobOffer();
   if (isLoading) return <FullPageLoading />;
-  console.log(data?.data);
   return (
     <Modal bottomSheetScreens={[]} modalCloseScreenSize={[]}>
       <Menu>
@@ -41,7 +40,11 @@ export default function JobOffers() {
                 {data.data.map((offer, i) => (
                   <>
                     <Table.Row key={i}>
-                      <Table.Cell>{offer.title}</Table.Cell>
+                      <Table.Cell>
+                        <Link to={`/client/job-offer/${offer.id}`}>
+                          {offer.title}
+                        </Link>
+                      </Table.Cell>
                       <Table.Cell>{offer.description} </Table.Cell>
                       <Table.Cell>
                         {formatISO(offer.created_at, {

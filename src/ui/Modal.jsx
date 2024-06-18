@@ -55,12 +55,13 @@ function Window({ name, children }) {
       <div
         ref={ref}
         // h-full
-        className="fixed left-1/2 top-1/2 flex h-full  w-full translate-x-[-50%] translate-y-[-50%] items-center justify-center overflow-hidden overflow-y-scroll rounded-lg bg-primary-background px-16 pb-5  sm:max-h-[80%] sm:w-auto sm:min-w-[500px]"
+        className="fixed left-1/2 top-1/2 w-full translate-x-[-50%] translate-y-[-50%]  overflow-x-hidden overflow-y-scroll rounded-lg bg-primary-background px-16 pb-5  sm:max-h-[80%] sm:w-auto sm:min-w-[500px]"
       >
         <button className=" absolute right-4 top-4 p-2" onClick={close}>
           <XIcon />
         </button>
-        <div style={{ height: "inherit" }} className="w-full py-4">
+        {/* style={{ height: "inherit" }}  */}
+        <div className="w-full py-4">
           {cloneElement(children, { onCloseModal: close })}
         </div>
       </div>

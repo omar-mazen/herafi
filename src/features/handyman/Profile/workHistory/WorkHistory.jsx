@@ -1,3 +1,5 @@
+import { formatISO } from "date-fns";
+import Pagenation from "../../../../ui/Pagenation";
 import SmallSpinner from "../../../../ui/SmallSpinner";
 import StaticRatingStars from "../../../../ui/StaticRatingStars";
 import { imgBaseURL } from "../../../../util/constatnt";
@@ -5,7 +7,6 @@ import useGetWorkHistory from "./useGetWorkHistory";
 
 export function WorkHistory() {
   const { workHistory, isLoading } = useGetWorkHistory();
-  console.log(workHistory);
   return (
     <div className="w-full space-y-8">
       <p className=" mb-10 text-h2 tracking-wider">سجل الأعمال</p>
@@ -15,18 +16,23 @@ export function WorkHistory() {
             <SmallSpinner />
           </div>
         )}
-        {workHistory?.workHistory.length > 0
-          ? workHistory?.workHistory.map((job, i) => (
+        {workHistory?.workHistory.length > 0 ? (
+          <>
+            {workHistory?.workHistory.map((job, i) => (
               <WorkHistoryElement
                 key={i}
                 title={job?.title}
-                // review={job?.rating[0]?.comment}
-                // rating={job?.rating[0]?.rating}
+                review={job?.clint_rating?.[0]?.comment}
+                rating={job?.clint_rating?.[0]?.rating / 5}
                 imgs={job?.images?.map((img) => imgBaseURL + img.image)}
-                date={"12/2/2023"}
+                date={formatISO(job?.created_at, { representation: "date" })}
               />
-            ))
-          : !isLoading && <p className=" text-medium">لا يوجد اعمال سابقه</p>}
+            ))}
+            <Pagenation total={workHistory?.latestPage} />
+          </>
+        ) : (
+          !isLoading && <p className=" text-medium">لا يوجد اعمال سابقه</p>
+        )}
       </div>
     </div>
   );

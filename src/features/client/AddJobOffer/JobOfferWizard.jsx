@@ -14,6 +14,8 @@ import { useQueryClient } from "@tanstack/react-query";
 import useAddJobOffer from "./useAddJobOffer";
 import { useAuth } from "../../../context/Auth";
 import { formatISO } from "date-fns";
+import { useNavigate } from "react-router-dom";
+import FullPageLoading from "../../../ui/FullPageLoading";
 
 export default function JobOfferWizard() {
   const { id } = useAuth();
@@ -31,23 +33,28 @@ export default function JobOfferWizard() {
   const [address, setAddress] = useState({ city: "", gov: "", st: "" });
   const governorates = useCallback(getGovernorates, []);
   const { addJobOffer, isLoading } = useAddJobOffer();
+  const navigate = useNavigate();
   function handelSubmit() {
-    addJobOffer({
-      id,
-      title: getValues("title"),
-      images: images.map((img) => img.img),
-      description: getValues("desc"),
-      client_price: getValues("price"),
-      craft_id: craft?.id,
-      start_date: date?.from
-        ? formatISO(date.from, { representation: "date" })
-        : null,
-      end_date: date?.to
-        ? formatISO(date.to, { representation: "date" })
-        : null,
-      city: address?.city,
-    });
+    addJobOffer(
+      {
+        id,
+        title: getValues("title"),
+        images: images.map((img) => img.img),
+        description: getValues("desc"),
+        client_price: getValues("price"),
+        craft_id: craft?.id,
+        start_date: date?.from
+          ? formatISO(date.from, { representation: "date" })
+          : null,
+        end_date: date?.to
+          ? formatISO(date.to, { representation: "date" })
+          : null,
+        city: address?.city,
+      },
+      { onSuccess: () => navigate("/client/job-offers") },
+    );
   }
+  if (isLoading) return <FullPageLoading />;
   return (
     <WizardStepper onSubmit={handelSubmit}>
       <WizardStepper.StepList>
@@ -174,7 +181,7 @@ export default function JobOfferWizard() {
           </div>
         </WizardStepper.Step>
         <WizardStepper.Step isNextButtonEnabled={date?.from}>
-          <div className="my-5">
+          <div className="mx-auto my-10 max-w-[600px]">
             <p className=" mb-5 justify-self-start text-large">
               اختر تاريخ المهمه
             </p>
@@ -203,7 +210,7 @@ export default function JobOfferWizard() {
             address.city && address.gov && address.st && getValues("price")
           }
         >
-          <div className="mx-auto my-5 grid w-fit grid-cols-1 justify-items-start gap-10 ">
+          <div className="mx-auto my-10 grid w-fit max-w-[600px] grid-cols-1 justify-items-start gap-10 ">
             <div>
               <p className=" mb-5 justify-self-start text-large">اضف عنوان</p>
               <p className=" mb-10 justify-self-start text-small text-gray">

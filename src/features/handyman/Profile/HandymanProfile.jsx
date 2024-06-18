@@ -4,8 +4,7 @@ import MapPinIcon from "../../../icons/MapPinIcon";
 import PhoneIcon from "../../../icons/PhoneIcon";
 import WhatsappIcon from "../../../icons/WhatsappIcon";
 import ProfilePic from "../../../ui/ProfilePic";
-import HeartIcon from "../../../icons/HeartIcon";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import UserClockIcon from "../../../icons/UserClockIcon";
 import StarIcon from "../../../icons/StarIcon";
 import CheckCircle from "../../../icons/CheckCircle";
@@ -28,7 +27,13 @@ import PlusIcon from "../../../icons/PlusIcon";
 import useGetSpecialImgs from "./special images/useGetSpecialImgs";
 import Menu from "../../../ui/Menu";
 import ThreeDots from "../../../icons/ThreeDots";
-import PenIcon from "../../../icons/PenIcon";
+import Modal from "../../../ui/Modal";
+import TrashIcon from "../../../ui/TrashIcon";
+import CameraIcon from "../../../icons/CameraIcon";
+import useAddSpecialImgs from "./special images/useAddSpecialImgs";
+import XIcon from "../../../icons/XIcon";
+import useDeleteSpecialImgs from "./special images/useDeleteSpecialImgs";
+import ConfirmDelete from "../../../ui/ConfirmDelete";
 
 export default function HandymanProfile() {
   const { pathname } = useLocation();
@@ -36,10 +41,7 @@ export default function HandymanProfile() {
   const { id: currentUserId, role } = useAuth();
   const isCurrentUserProfile = id == currentUserId;
   const { isLoading, getUser, user } = useGetUser();
-
   useEffect(() => {
-    if (user?.name) document.title = user.name;
-    if (!id) return;
     getUser({ id, role: "handyman" });
   }, [id]);
 
@@ -47,7 +49,6 @@ export default function HandymanProfile() {
 
   if (id && !user?.status && !isLoading)
     return <NotFound message={"هذا المستخد غير موجود"} />;
-
   return (
     <div className=" container my-10 h-full space-y-10">
       <div className=" grid grid-cols-[auto,1fr,auto]  grid-rows-1 items-center gap-5">
@@ -85,7 +86,7 @@ export default function HandymanProfile() {
               <SettingIcon />
             </Link>
           ) : (
-            <AddToFavoriteButton />
+            role == "client" && <AddToFavoriteButton />
           )}
         </div>
       </div>
@@ -144,9 +145,9 @@ export function About({
   isCurrentUserProfile,
 }) {
   const { isLoading, data: specialImgs } = useGetSpecialImgs();
-  // console.log(data);
+
   return (
-    <>
+    <Modal bottomSheetScreens={[]} modalCloseScreenSize={""}>
       <div className="space-y-8">
         <div className=" flex flex-col items-start gap-5">
           <div className=" flex  items-center gap-3 text-gray">
@@ -211,10 +212,10 @@ export function About({
                 <WhatsappIcon />
               </span>
               <a
-                href={`https://wa.me/+2${contact?.whatsapp}`}
+                href={`https://wa.me/+2${contact?.phone}`}
                 className=" transition-all duration-100 ease-in-out hover:text-primary-color"
               >
-                {contact?.whatsapp}
+                {contact?.phone}
               </a>
             </div>
           ))}
@@ -256,8 +257,12 @@ export function About({
                 <ThreeDots />
               </Menu.Toggle>
               <Menu.List name={"specialImgs"}>
-                <Menu.Item icon={<PenIcon size={15} />}>تعديل</Menu.Item>
-                <Menu.Item icon={<PlusIcon />}>اضافة</Menu.Item>
+                <Modal.Open opens={"add"}>
+                  <Menu.Item icon={<PlusIcon />}>اضافة</Menu.Item>
+                </Modal.Open>
+                <Modal.Open opens={"delete"}>
+                  <Menu.Item icon={<TrashIcon size={15} />}>حذف</Menu.Item>
+                </Modal.Open>
               </Menu.List>
             </Menu>
           )}
@@ -280,13 +285,137 @@ export function About({
           )}
         </div>
       </div>
-    </>
+      <Modal.Window name={"add"}>
+        <AddSpecialImgs />
+      </Modal.Window>
+      <Modal.Window name={"delete"}>
+        <DeleteSpecialImgs
+          images={specialImgs?.map((img) => {
+            return { img: imgBaseURL + img.image, id: img.id };
+          })}
+        />
+      </Modal.Window>
+    </Modal>
   );
 }
+function AddSpecialImgs({ onCloseModal }) {
+  const { isLoading: isAddingSpecilaImgs, addSpecialImg } = useAddSpecialImgs();
 
-// مرحبًا، أنا عمر مازن، نجار محترف متخصص في مجال النجارة منذ عشر
-//             سنوات. بدأت مسيرتي المهنية في النجارة بالعمل في السعودية حيث اكتسبت
-//             خبرة قيمة، ثم انتقلت للتدريب في شركات عالمية متعددة الجنسيات. أتمتع
-//             بمهارات عالية في صناعة الأثاث والأعمال الخشبية المتنوعة، وأسعى
-//             دائمًا لتقديم أعمال نجارة بجودة عالية تلبي احتياجات عملائي. تابعني
-//             للاطلاع على أحدث أعمالي ومشاريعي!
+  const [images, setImages] = useState([]);
+  return (
+    <div className="max-w-[500px]">
+      <p className="mb-5 mt-2 text-center text-large">أضف الي صورك المميزه</p>
+      <div
+        style={{
+          gridTemplateColumns: `repeat(${images.length + 1},100px)`,
+        }}
+        className="grid grid-rows-[100px] gap-5 overflow-y-hidden overflow-x-scroll pb-5 "
+      >
+        <div
+          className=" relative h-full w-full cursor-pointer overflow-hidden rounded-lg bg-secondary-background "
+          disabled={images.length >= 5}
+          style={{ opacity: `${images.length >= 5 ? "50%" : "100%"}` }}
+        >
+          <div className="flex h-full w-full items-center justify-center">
+            <span className="flex aspect-square h-16 items-center justify-center rounded-full bg-primary-color">
+              <CameraIcon size={15} />
+            </span>
+          </div>
+          <input
+            type="file"
+            accept="image/png, image/jpg, image/jpeg"
+            style={{ opacity: "0" }}
+            className=" absolute left-0 top-0 h-full w-full cursor-pointer overflow-hidden opacity-0"
+            title=""
+            disabled={images.length >= 5}
+            onChange={(e) => {
+              const files = e.target.files;
+              for (const file of files) {
+                if (images.length >= 5) return;
+                setImages((imgs) => {
+                  if (imgs?.length < 5)
+                    return [
+                      ...imgs,
+                      {
+                        img: file,
+                        imgPreview: URL.createObjectURL(file),
+                      },
+                    ];
+                  else return imgs;
+                });
+              }
+            }}
+          />
+        </div>
+        {images?.map((img, i) => (
+          <div key={i} className="relative px-1">
+            <img
+              src={img.imgPreview}
+              className=" h-[100px] w-[100px] rounded-xl object-cover"
+            />
+          </div>
+        ))}
+      </div>
+      <Button
+        size="medium"
+        additionalStyle={` mx-auto`}
+        onClick={() => {
+          addSpecialImg(images, {
+            onSuccess: () => {
+              onCloseModal();
+              setImages([]);
+            },
+          });
+        }}
+        disabled={isAddingSpecilaImgs || images.length < 1}
+      >
+        {isAddingSpecilaImgs ? <SmallSpinner /> : "اضافة"}
+      </Button>
+    </div>
+  );
+}
+function DeleteSpecialImgs({ onCloseModal, images }) {
+  const { deleteSpecialImg, isLoading } = useDeleteSpecialImgs();
+  const ref = useRef();
+  return (
+    <Modal>
+      <div className="max-w-[500px]">
+        <p className="mb-5 mt-2 text-center text-large">حذف صورة</p>
+        <div
+          style={{
+            gridTemplateColumns: `repeat(${images.length},100px)`,
+          }}
+          className="grid grid-rows-[100px] gap-5 overflow-y-hidden overflow-x-scroll pb-5 "
+        >
+          {images?.map((img, i) => (
+            <div key={i} className="relative px-1">
+              <img
+                src={img.img}
+                className=" h-[100px] w-[100px] rounded-xl object-cover"
+              />
+              <span
+                className=" absolute right-1 top-1 cursor-pointer rounded-full bg-[rgb(0,0,0,0.5)] p-1 text-white"
+                onClick={() => {
+                  deleteSpecialImg(img.id);
+                }}
+              >
+                <XIcon size={15} />
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <ConfirmDeleteSpecialImg />
+    </Modal>
+  );
+}
+function ConfirmDeleteSpecialImg() {
+  return (
+    <Modal.Window name={"confirmDeleteSpecialImgs"}>
+      <ConfirmDelete
+        resourceName={"هذه الصورة"}
+        onConfirm={() => console.log("con")}
+      ></ConfirmDelete>
+    </Modal.Window>
+  );
+}

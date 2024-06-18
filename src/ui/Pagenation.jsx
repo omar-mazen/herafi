@@ -28,7 +28,10 @@ export default function Pagenation({ total }) {
     setSearchParams(searchParams);
   }
   return (
-    <div style={{ direction: "ltr" }} className="flex items-center rounded-lg ">
+    <div
+      style={{ direction: "ltr" }}
+      className="flex items-center rounded-lg drop-shadow-md"
+    >
       <span
         ref={pageRef}
         style={{ direction: "ltr" }}

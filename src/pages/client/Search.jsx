@@ -84,8 +84,8 @@ function SearchCard({ handyman }) {
     description,
     average_rating: rating,
     number_of_ratings: numberOfRatings,
-    done_jobs_num: numberOfActiveJobs,
-    active_jobs_num: numberOfDoneJobs,
+    done_jobs_num: numberOfDoneJobs,
+    active_jobs_num: numberOfActiveJobs,
     search_images: specialImages,
     craft: { name: craft },
   } = handyman;

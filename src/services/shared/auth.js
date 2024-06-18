@@ -26,6 +26,7 @@ export async function signup({
       });
     }
   } catch (error) {
+    console.log(error);
     throw new Error(Object.values(JSON.parse(error.response.data))[0][0]);
   }
   return response.data;

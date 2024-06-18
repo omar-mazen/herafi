@@ -160,7 +160,6 @@ function ReplyCard({
   handymanId,
 }) {
   const { isLoading, acceptJobOffer } = useAcceptJobOffer();
-  console.log(handymanId, jobOfferId);
   return (
     <div className="rounded-lg bg-secondary-background px-6 py-8">
       <div className="flex items-center gap-5 ">

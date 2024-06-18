@@ -15,11 +15,11 @@ export async function getSpecialImg({ id }) {
 export async function addSpecialImg({ id, images }) {
   const formData = new FormData();
   if (images?.length > 0)
-    for (const image of images) formData.append("image[]", image);
+    for (const image of images) formData.append("image[]", image.img);
   let response;
   try {
     response = await apiPrivate.post(
-      `/api/craftsman/get_search_images?craftsman_id=${id}`,
+      `/api/craftsman/add_search_images?craftsman_id=${id}`,
       formData,
     );
     const data = response.data;

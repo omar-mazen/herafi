@@ -17,7 +17,7 @@ export async function addToPortfolio({ id, title, description, images }) {
     throw new Error(error.response.data.message);
   }
 }
-export async function getHandymanPortfolio({ id, page = 1, pageSize = 5 }) {
+export async function getHandymanPortfolio({ id, page, pageSize }) {
   let response;
   try {
     response = await apiPrivate.post(

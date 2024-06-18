@@ -8,6 +8,7 @@ import UserIcon from "../../../icons/UserIcon";
 import StaticRatingStars from "../../../ui/StaticRatingStars";
 import FullPageLoading from "../../../ui/FullPageLoading";
 import useGetDoneJob from "./useGetDoneJob";
+import { imgBaseURL } from "../../../util/constatnt";
 
 export default function DoneJob() {
   const { isLoading, data } = useGetDoneJob();
@@ -21,6 +22,7 @@ export default function DoneJob() {
           تفاصيل المهمه
         </p>
         <p className=" text-h2 ">{data?.title}</p>
+
         <div className=" mt-2 flex items-center gap-10 text-gray">
           <span className="flex items-center gap-2">
             <OutlineClockIcon size={15} />
@@ -29,47 +31,32 @@ export default function DoneJob() {
             </span>
           </span>
         </div>
+        <div className="mt-10">
+          <span className="inline-block text-gray">السعر:</span>
+          <span className=" inline-block pr-3 text-primary-color">
+            {data?.price}
+          </span>
+        </div>
         <div className="my-5">
           <span className="text-gray">الوصف:</span>
           <p className="mt-5">{data?.description}</p>
         </div>
-        <div className="flex gap-5 overflow-scroll pb-5 pt-2">
-          <div className="w-32 min-w-32">
-            <figure className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color">
-              <img
-                src="/public/work1.jpeg"
-                alt=""
-                className=" h-full w-full object-cover object-center"
-              />
-            </figure>
-          </div>
-          <div className="w-32 min-w-32">
-            <figure className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color">
-              <img
-                src="/public/work2.webp"
-                alt=""
-                className=" h-full w-full object-cover object-center"
-              />
-            </figure>
-          </div>
-          <div className="w-32 min-w-32">
-            <figure className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color">
-              <img
-                src="/public/work3.jpeg"
-                alt=""
-                className=" h-full w-full object-cover object-center"
-              />
-            </figure>
-          </div>
-          <div className="w-32 min-w-32">
-            <figure className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color">
-              <img
-                src="/public/work4.jpg"
-                alt=""
-                className=" h-full w-full object-cover object-center"
-              />
-            </figure>
-          </div>
+        <div className="flex gap-5 overflow-scroll py-2">
+          {data?.images?.map((img, i) => {
+            const imageUrl = `${imgBaseURL}${img.image}`;
+
+            return (
+              <div key={i} className="w-32 min-w-32">
+                <figure className="aspect-[2/3] w-full overflow-hidden rounded-lg bg-primary-background bg-[url('/defaultImg.png')] bg-center bg-no-repeat text-text-color">
+                  <img
+                    src={imageUrl}
+                    alt=""
+                    className=" h-full w-full object-cover object-center"
+                  />
+                </figure>
+              </div>
+            );
+          })}
         </div>
         <div className=" border-b border-t border-text-color/20 py-5">
           <p className="mb-5 text-h3">تقييم العميل لك</p>
@@ -107,16 +94,14 @@ function AboutClient({ client }) {
             <UserIcon />
             <span>الاسم :</span>
           </span>
-          <span className=" text-small text-text-color">{client.name}</span>
+          <span className=" text-small text-text-color">{client?.name}</span>
         </div>
         <div className=" flex  items-center gap-3 text-gray">
           <span className=" flex items-center gap-3">
             <MapPinIcon />
             <span className=" text-nowrap">العنوان :</span>
           </span>
-          <span className=" text-small text-text-color">
-            الدقهليه ,المنصورة ,احمد ماهر
-          </span>
+          <span className=" text-small text-text-color">{client?.address}</span>
         </div>
         <div className=" flex  items-center gap-3 text-gray">
           <span
@@ -127,8 +112,11 @@ function AboutClient({ client }) {
           </span>
           <span>رقم الهاتف :</span>
 
-          <a href="tel:+201095424911" className=" text-small text-text-color">
-            01095424911
+          <a
+            href={`tel:+2${client?.phone}`}
+            className=" text-small text-text-color"
+          >
+            {client?.phone}
           </a>
         </div>
       </div>

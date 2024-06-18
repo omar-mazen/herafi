@@ -83,6 +83,8 @@ export default function UpdateContacts() {
   // const phones = (user.phones.map((phone) => phone.phone));
   // const whatsapp= (user.whatsapp.map((whatsapp) => whatsapp.whatsapp));
   if (!user?.name) return <FullPageLoading />;
+
+  console.log(phones, whatsapp);
   return (
     <>
       <section>
@@ -155,11 +157,9 @@ export default function UpdateContacts() {
           </Button>
           <Button
             onClick={() => {
-              const phones = user.phones.map((phone) => phone.phone);
-              const whatsapp = user.whatsapp.map(
-                (whatsapp) => whatsapp.whatsapp,
-              );
-              updateContacts({ id, phones, whatsapp });
+              const ph = phones.map((phone) => phone.phone);
+              const wh = whatsapp.map((whatsapp) => whatsapp.whatsapp);
+              updateContacts({ id, phones: ph, whatsapp: wh });
             }}
             disabled={
               isLoading ||

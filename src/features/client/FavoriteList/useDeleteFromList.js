@@ -19,7 +19,7 @@ export default function useDeleteFromList() {
         listId,
       }),
     onSuccess: () => {
-      queryClient.resetQueries(["favoriteList", listId, page]);
+      queryClient.refetchQueries(["favoriteList", listId, page]);
       toast.success("تم حذف الحرفي من القائمه بنجاح.");
     },
     onError: () => toast.success("عذراً، يبدو أن هناك خطأ. حاول مرة اخري!"),
