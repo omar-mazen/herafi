@@ -56,10 +56,10 @@ export default function ActiveJob() {
               </span>
               <span>رقم الهاتف :</span>
               <a
-                href={`tel:+2${data?.client_data?.[0]?.phone}`}
+                href={`tel:+20${data?.phone || data?.client_data?.[0]?.phone}`}
                 className=" text-small text-text-color"
               >
-                {data?.client_data?.[0]?.phone}
+                0{data?.phone || data?.client_data?.[0]?.phone}
               </a>
             </div>
           </div>
@@ -71,13 +71,21 @@ export default function ActiveJob() {
           <div className="flex items-center justify-between">
             <p className=" text-h2 ">{data?.title}</p>
             <Modal.Open opens={"finsh"}>
-              <Button additionalStyle={` text-nowrap py-2`}>انهاء</Button>
+              <Button
+                additionalStyle={` text-nowrap py-2  ${data?.is_finished == "yes" ? "!px-3 w-fit text-xsmall" : ""}`}
+                disabled={data?.is_finished == "yes"}
+              >
+                {data?.is_finished == "yes"
+                  ? "لم يقم العميل بالانهاء"
+                  : "انهاء"}
+              </Button>
             </Modal.Open>
           </div>
           <div className="mt-10">
             <span className="inline-block text-gray">السعر:</span>
             <span className=" inline-block pr-3 text-primary-color">
               {data?.price}
+              <span className=" text-gray"> لكل {data?.type_of_pricing}</span>
             </span>
           </div>
           <div className="my-5 grid w-fit grid-cols-[auto,auto] items-center gap-5">
@@ -134,7 +142,6 @@ export default function ActiveJob() {
             size="block"
             disabled={finishingJob}
             onClick={() => {
-              console.log("clicked");
               finishJob({ comment, rating });
             }}
           >

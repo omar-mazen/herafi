@@ -26,7 +26,7 @@ export default function ClientHome() {
   return (
     <>
       <main className=" container mb-10 space-y-20">
-        <section className=" grid min-h-[calc(100vh-120px)] grid-rows-[auto,1fr] items-center justify-center md:h-fit md:grid-cols-[1fr,auto] md:grid-rows-1 md:items-center">
+        <section className=" grid min-h-[calc(100vh-110px)] grid-rows-[auto,1fr] items-center justify-center md:h-fit md:grid-cols-[1fr,auto] md:grid-rows-1 md:items-center">
           <div className=" flex max-h-[300px] max-w-[300px] items-center justify-center place-self-center md:col-start-2 md:col-end-3 md:row-start-1">
             <img
               src="/char-blob.png"

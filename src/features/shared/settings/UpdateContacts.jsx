@@ -64,18 +64,16 @@ export default function UpdateContacts() {
   }
   function editWhatsapp(index, value) {
     const duplicates =
-      whatsapp.length > 1
-        ? checkDuplicates(whatsapp, "whatsapp", value)
-        : false;
+      whatsapp.length > 1 ? checkDuplicates(whatsapp, "phone", value) : false;
     const phoneMatch = phoneRegex.test(value);
     setWhatsapp(
       whatsapp?.map((whatsapp, i) => {
         if (i == index) {
           if (duplicates)
-            return { whatsapp: value, error: "رقم الهاتف موجود بالفعل." };
+            return { phone: value, error: "رقم الهاتف موجود بالفعل." };
           if (!phoneMatch)
-            return { whatsapp: value, error: "رقم الهاتف غير صحيح." };
-          if (!duplicates && phoneMatch) return { whatsapp: value };
+            return { phone: value, error: "رقم الهاتف غير صحيح." };
+          if (!duplicates && phoneMatch) return { phone: value };
         } else return whatsapp;
       }),
     );
@@ -92,6 +90,7 @@ export default function UpdateContacts() {
         {phones.length > 0 ? (
           <ContactList
             contacts={phones}
+            type={"phone"}
             deleteContact={deletePhones}
             editContact={editPhones}
           />
@@ -116,7 +115,7 @@ export default function UpdateContacts() {
           <Button
             onClick={() => {
               const ph = phones.map((phone) => phone.phone);
-              const wh = whatsapp.map((whatsapp) => whatsapp.whatsapp);
+              const wh = whatsapp.map((whatsapp) => whatsapp.phone);
               updateContacts({ id, phones: ph, whatsapp: wh });
             }}
             disabled={
@@ -143,6 +142,7 @@ export default function UpdateContacts() {
         ) : (
           <ContactList
             contacts={whatsapp}
+            type={"whatsapp"}
             deleteContact={deleteWhatsapp}
             editContact={editWhatsapp}
           />
@@ -158,14 +158,14 @@ export default function UpdateContacts() {
           <Button
             onClick={() => {
               const ph = phones.map((phone) => phone.phone);
-              const wh = whatsapp.map((whatsapp) => whatsapp.whatsapp);
+              const wh = whatsapp.map((whatsapp) => whatsapp.phone);
               updateContacts({ id, phones: ph, whatsapp: wh });
             }}
             disabled={
               isLoading ||
               phones.length < 1 ||
               whatsapp.reduce(
-                (prev, curr) => prev || curr?.error || !curr.whatsapp,
+                (prev, curr) => prev || curr?.error || !curr.phone,
                 false,
               )
             }
@@ -179,11 +179,11 @@ export default function UpdateContacts() {
     </>
   );
 }
-function ContactList({ contacts, editContact, deleteContact }) {
+function ContactList({ contacts, type, editContact, deleteContact }) {
   return (
     <div className="my-10 grid gap-5 lg:grid-cols-2">
       {contacts?.map((contact, i) =>
-        Object.keys(contact)[0] == "phone" ? (
+        type == "phone" ? (
           <Contact
             key={i}
             index={i}
@@ -216,7 +216,6 @@ function Contact({
   editContact,
   deleteContact,
 }) {
-  // console.log(contact);
   return (
     <>
       <div className="grid w-fit grid-cols-[minmax(100px,250px),auto] items-center gap-5">

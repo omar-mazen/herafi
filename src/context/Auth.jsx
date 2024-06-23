@@ -1,7 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { getCookie } from "../util/helper";
-import useGetUserById from "../features/shared/Authentication/useGetUser";
-import useGetUser from "../features/shared/Authentication/useGetUser";
 import { getUserById } from "../services/shared/user";
 
 const authContext = createContext();
@@ -32,7 +30,6 @@ export function AuthProvider({ children }) {
     }
     getUser();
   }, []);
-
   console.log(auth);
   return (
     <authContext.Provider

@@ -50,7 +50,7 @@ function Window({ name, children }) {
     );
   return createPortal(
     // modal overlay
-    <div className="fixed left-0 top-0 z-[999] min-h-full min-w-full bg-text-color/10 backdrop-blur-[2px] transition-all duration-[0.5s]">
+    <div className="fixed left-0 top-0 z-[999] min-h-full min-w-full bg-text-color/10 backdrop-blur-[5px] transition-all duration-[0.5s]">
       {/* modal */}
       <div
         ref={ref}

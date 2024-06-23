@@ -1,5 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { addCities as addCitiesApi } from "../../../services/handyman/cities";
+import {
+  addCities as addCitiesApi,
+  updateCities,
+} from "../../../services/handyman/cities";
 import { toast } from "react-toastify";
 
 export default function useAddCities() {
@@ -8,7 +11,7 @@ export default function useAddCities() {
     isSuccess,
     isPending: isLoading,
   } = useMutation({
-    mutationFn: addCitiesApi,
+    mutationFn: updateCities,
     onError: (error) => toast.error(error.message),
   });
   return { addCities, isSuccess, isLoading };

@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/Auth";
 import CompleteProfileWizard from "../features/handyman/Profile/CompleteProfileWizard/CompleteProfileWizard";
+import FullPageLoading from "./FullPageLoading";
 
 export default function ProtectedRoutes({ allowedRole }) {
   const { isAuth, role, user } = useAuth();
@@ -20,6 +21,7 @@ export default function ProtectedRoutes({ allowedRole }) {
           information={!user?.description && !user?.address && !user?.image}
         />
       );
+  if (isAuth && !user?.name) return <FullPageLoading />;
   return allowedRole?.includes(role) ? (
     <Outlet />
   ) : isAuth && user?.name ? (

@@ -10,9 +10,11 @@ export async function getUserById({ id, role }) {
         `/api/craftsman/get_user?craftsman_id=${id}`,
       );
     }
+
     const data = response.data;
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error(error.response.data.message);
   }
 }

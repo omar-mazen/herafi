@@ -9,6 +9,7 @@ import { useAuth } from "../../../../context/Auth";
 import useAddCities from "../../../shared/Authentication/useAddCities";
 import useAddPhones from "../../../shared/Authentication/useAddPhones";
 import useCompleteHandymanInfo from "./useCompleteHandymanInfo";
+import FullPageLoading from "../../../../ui/FullPageLoading";
 
 const CompleteProfileContext = createContext();
 
@@ -155,22 +156,10 @@ export default function CompleteProfileWizard({
     errors: {},
   });
   const { id, role } = useAuth();
-  const {
-    completeHandymanInfo,
-    isLoading: completeHandymanInfoIsLoading,
-    isSuccess: completeHandymanInfoIsSuccess,
-  } = useCompleteHandymanInfo();
-  const {
-    addCities,
-    isLoading: addCitiesIsLoading,
-    isSuccess: addCitiesIsSuccess,
-  } = useAddCities();
-  const {
-    addPhones,
-    isLoading: addPhonesIsLoading,
-    isSuccess: addPhonesIsSuccess,
-  } = useAddPhones();
+  const { completeHandymanInfo, isLoading, isSuccess } =
+    useCompleteHandymanInfo();
   console.log(state);
+  if (isLoading) return <FullPageLoading />;
   return (
     <CompleteProfileContext.Provider
       value={{
@@ -212,34 +201,18 @@ export default function CompleteProfileWizard({
               whatsapp: [],
             },
           );
-          const locations = Object.values(state.workLocations)?.reduce(
-            (prev, curr) => (Array.isArray(curr) ? [...prev, ...curr] : prev),
-            [],
-          );
-          console.log(contacts);
-          if (information)
-            completeHandymanInfo({
-              id,
-              role,
-              address: `${state?.gov}${state?.city ? ", " + state?.city : ""}${state?.street ? ", " + state?.street : ""}`,
-              description: state.bio,
-              image: state.profilePic,
-              craftId: state.craft,
-            });
-          if (phones)
-            addPhones({
-              id,
-              phones: contacts.phone,
-              whatsapp: contacts.whatsapp,
-            });
 
-          if (cities)
-            locations.length > 0
-              ? addCities({
-                  id,
-                  cities,
-                })
-              : "";
+          completeHandymanInfo({
+            id,
+            role,
+            address: `${state?.gov}${state?.city ? ", " + state?.city : ""}${state?.street ? ", " + state?.street : ""}`,
+            description: state.bio,
+            image: state.profilePic,
+            craftId: state.craft,
+            phones: contacts.phone,
+            whatsapp: contacts.whatsapp,
+            cities: state.workLocations,
+          });
         }}
       >
         <WizardStepper.StepList>
@@ -260,6 +233,16 @@ export default function CompleteProfileWizard({
                   image: state.profilePic,
                 })
               }
+              onNext={() =>
+                completeHandymanInfo({
+                  id,
+                  role,
+                  address: `${state?.gov}${state?.city ? ", " + state?.city : ""}${state?.street ? ", " + state?.street : ""}`,
+                  description: state.bio,
+                  image: state.profilePic,
+                  craftId: state.craft,
+                })
+              }
             >
               <ProfileSetupStep />
             </WizardStepper.Step>
@@ -274,6 +257,23 @@ export default function CompleteProfileWizard({
                   ? Object.values(state?.contacts?.[0])?.[0]
                   : false
               }
+              onNext={() => {
+                const contacts = state?.contacts?.reduce(
+                  (prev, curr) => {
+                    if (curr.phone)
+                      return { ...prev, phone: [...prev.phone, curr.phone] };
+                    else if (curr.whatsapp)
+                      return {
+                        ...prev,
+                        whatsapp: [...prev.whatsapp, curr.whatsapp],
+                      };
+                  },
+                  {
+                    phone: [],
+                    whatsapp: [],
+                  },
+                );
+              }}
             >
               <ContactSelectionStep />
             </WizardStepper.Step>

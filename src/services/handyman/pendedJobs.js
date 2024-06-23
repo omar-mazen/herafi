@@ -7,6 +7,7 @@ export async function getAllPendedJobs({ id, pageSize, page }) {
       `/api/craftsman/get_pending_jobs?craftsman_id=${id}&pagination=${pageSize}&page=${page}`,
     );
     const data = await response.data.data;
+    console.log(response);
     return {
       latestPage: data?.last_page,
       data: data.data,
@@ -21,6 +22,18 @@ export async function getPendedJob({ jobId }) {
   try {
     response = await apiPrivate.post(
       `/api/craftsman/get_one_pending_job?pending_job_id=${jobId}`,
+    );
+    const data = await response.data.data;
+    return data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+}
+export async function cancelPendedJob({ jobId, craftsmanId }) {
+  let response;
+  try {
+    response = await apiPrivate.post(
+      `/api/craftsman/delete_job_offer_reply?craftsman_id=${craftsmanId}&job_offer_id=${jobId}`,
     );
     const data = await response.data.data;
     return data;

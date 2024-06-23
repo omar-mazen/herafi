@@ -248,7 +248,6 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
           <>
             <ul className=" mt-10 text-medium">
               <li className="" onClick={close}>
-                {" "}
                 <Link
                   to={"client/job-offer/add"}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
@@ -257,7 +256,6 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
                 </Link>
               </li>
               <li className="" onClick={close}>
-                {" "}
                 <Link
                   to={"client/job-offers/"}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
@@ -265,10 +263,17 @@ function SideMenu({ close, role, id, logout, themeToggle, theme }) {
                   عروض العمل
                 </Link>
               </li>
+              <li className="" onClick={close}>
+                <Link
+                  to={"client/jobs/active"}
+                  className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"
+                >
+                  المهام النشطه
+                </Link>
+              </li>
             </ul>
             <ul className="mt-10 text-medium">
               <li className="" onClick={close}>
-                {" "}
                 <Link
                   to={`/client/${id}/settings`}
                   className=" ransition-all block cursor-pointer px-2 py-4 duration-300 ease-in-out hover:bg-primary-background hover:pr-6 hover:text-primary-color"

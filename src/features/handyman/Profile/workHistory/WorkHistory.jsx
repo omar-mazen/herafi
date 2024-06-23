@@ -31,7 +31,7 @@ export function WorkHistory() {
             <Pagenation total={workHistory?.latestPage} />
           </>
         ) : (
-          !isLoading && <p className=" text-medium">لا يوجد اعمال سابقه</p>
+          !isLoading && <p className=" text-medium">لا يوجد سجل اعمال</p>
         )}
       </div>
     </div>
@@ -72,3 +72,56 @@ function WorkHistoryElement({ title, date, review, rating, imgs }) {
     </div>
   );
 }
+// title, date, review, rating, imgs
+const data2 = [
+  {
+    title: "مقاعد خشبيه لمطعم",
+    rating: 5,
+    review: `
+      لقد كانت تجربتي رائعة بكل المقاييس. قمت بالبحث عن نجار ماهر لتصميم وتصنيع مقاعد خشبية لمطعمي الخارجي، وقد تجاوزت النتائج كل توقعاتي.
+المقاعد التي صممها وصنعها تتميز بمتانة عالية وجمال وأناقة واضحة، مما يعزز من جمال المطعم وأسلوبه ومريحة للغاية وتناسب تماماً احتياجات الزبائن، مما جعل تجربة تناول الطعام في الهواء الطلق ممتعة ومريحة.
+    `,
+    date: "15/6/2024",
+    imgs: [
+      "/public/seat/vintage-oak-dining-table-with-built-in-attached-swing-out-seats-10.jpg",
+      "/public/seat/vintage-oak-dining-table-with-built-in-attached-swing-out-seats-12.jpg",
+      "/public/seat/vintage-oak-dining-table-with-built-in-attached-swing-out-seats-2a.jpg",
+      "/public/seat/vintage-oak-dining-table-with-built-in-attached-swing-out-seats-7.jpg",
+      "/public/seat/vintage-oak-dining-table-with-built-in-attached-swing-out-seats-8.jpg",
+      "/public/seat/vintage-oak-dining-table-with-built-in-attached-swing-out-seats-mainw-wp-700x700.jpg",
+    ],
+  },
+  {
+    title: "تصميم وتركيب خزانة ملابس",
+    rating: 5,
+    review: `
+تعامله كان ودودًا ومحترفًا، وأظهر اهتمامًا حقيقيًا بتحقيق رضا العميل. كان متعاونًا جدًا ومرنًا في التعامل مع المتطلبات والتعديلات، وتواصل معنا بانتظام لضمان تلبية كافة احتياجاتنا. أنصح بشدة بالتعامل معه لأي شخص يبحث عن نجار محترف يقدم عملًا متقنًا بجودة عالية. شكرًا لك على العمل الرائع!    `,
+    date: "10/6/2024",
+    imgs: [
+      "/public/dol/814Rm3GmddL._AC_SX569_.jpg",
+      "/public/dol/81aJDdmVPdL._AC_SX569_.jpg",
+      "/public/dol/81nAtR+GpmL._AC_SX569_.jpg",
+    ],
+  },
+  {
+    imgs: ["/public/door/images.jpeg"],
+    title: "تصميم وتركيب باب خشبي",
+    rating: 5,
+    review: `لقد كانت تجربتي أكثر من رائعة. كنت أبحث عن نجار ماهر لتصميم وتركيب باب خشبي فاخر للمدخل الرئيسي في منزلي، وقد قام  بتنفيذ المهمة بشكل يفوق التوقعات. الباب الذي صممه وصنعه هو قطعة فنية تعكس طابع الفخامة والجمالية للمنزل بشكل مثالي. أظهر اهتماماً كبيراً بالتفاصيل، حيث تأكد من أن تصميم الباب يتناسب تماماً مع هيكل المنزل والديكور الداخلي والخارجي. عملية التركيب كانت متقنة للغاية، واستخدم مواد عالية الجودة ومتينة لضمان دوام الباب لفترة طويلة.`,
+
+    date: "7/6/2024",
+  },
+  {
+    imgs: [
+      "/public/desk/ezgif.com-webp-to-jpg-converter (1).jpg",
+      "/public/desk/ezgif.com-webp-to-jpg-converter (2).jpg",
+      "/public/desk/ezgif.com-webp-to-jpg-converter (3).jpg",
+    ],
+    title: "تصميم وتصنيع مكتب عمل خشبي",
+    rating: 5,
+    review: `
+لقد كان متعاونًا للغاية خلال عملية التصميم والتصنيع، حيث استمع بعناية إلى اقتراحاتي وأفكاري، ونجح في تحويلها إلى واقع ملموس بمهارة وإتقان.    `,
+
+    date: "20/5/2024",
+  },
+];

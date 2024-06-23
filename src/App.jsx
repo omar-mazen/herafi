@@ -16,8 +16,6 @@ import AccountSettings from "./features/shared/settings/Account";
 import UpdatePassword from "./features/shared/settings/UpdatePassword";
 import UpdateWorkLocations from "./features/shared/settings/UpdateWorkLocations";
 import UpdateContacts from "./features/shared/settings/UpdateContacts";
-import { Suspense, useCallback, useEffect } from "react";
-import { getHandymanPortfolio } from "./services/handyman/portfolio";
 import { Portfolio } from "./features/handyman/Profile/portfolio/Portfolio";
 import HandymanHome from "./features/handyman/Home/HandymanHome";
 import { WorkHistory } from "./features/handyman/Profile/workHistory/WorkHistory";
@@ -35,18 +33,14 @@ import DoneJobs from "./features/handyman/doneJobs/DoneJobs";
 import DoneJob from "./features/handyman/doneJobs/DoneJob";
 import useGetAllCrafts from "./features/shared/crafts/useGetAllCrafts";
 import JobOffers from "./features/client/jobOffers/JobOffers";
-import {
-  addHandymanToFavoriteList,
-  getFavoriteList,
-} from "./services/client/favorites";
 import PublicHome from "./pages/shared/PublicHome";
 import ClientHome from "./pages/client/ClientHome";
-import { GoogleLogin, useGoogleOneTapLogin } from "@react-oauth/google";
-import FacebookLogin from "@greatsumini/react-facebook-login";
-import FacebookIcon from "./icons/FacebookIcon";
 import ClientActiveJobs from "./features/client/ActiveJobs/ClietnActiveJobs";
 import ClientActiveJob from "./features/client/ActiveJobs/ClientActiveJob";
 import ClientRating from "./features/client/Rating/ClientRating";
+import ForgetPasswordPage from "./pages/shared/ForgetPasswordPage";
+import ForgotPasswordEmailForm from "./features/shared/Authentication/ForgotPasswordEmailForm";
+import ForgotPasswordNewPasswordForm from "./features/shared/Authentication/ForgotPasswordNewPasswordForm";
 
 function App() {
   const { crafts } = useGetAllCrafts();
@@ -55,6 +49,13 @@ function App() {
     <>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/forgot-password" element={<ForgetPasswordPage />}>
+        <Route index element={<ForgotPasswordEmailForm />} />
+        <Route
+          path="reset-password"
+          element={<ForgotPasswordNewPasswordForm />}
+        />
+      </Route>
     </>
   );
   const ClientRoutes = (
@@ -85,7 +86,6 @@ function App() {
         <Route path="job">
           <Route path="active/:id" element={<ClientActiveJob />} />
         </Route>
-        <Route path="rating/:id" element={<ClientRating />} />
       </Route>
     </>
   );
@@ -131,6 +131,7 @@ function App() {
         <Route path="update-work-locations" element={<UpdateWorkLocations />} />
         <Route path="update-contacts" element={<UpdateContacts />} />
       </Route>
+      <Route path="client/rating/:id" element={<ClientRating />} />
     </Route>
   );
   return (
@@ -146,7 +147,6 @@ function App() {
           {handymanRoutes}
           {sharedRoutes}
           <Route path="home" element={<ClientHome />}></Route>
-          <Route path="test" element={<SocialLogin />}></Route>
         </Route>
         <Route
           path="*"
@@ -160,59 +160,5 @@ function App() {
     </BrowserRouter>
   );
 }
-function SocialLogin() {
-  useGoogleOneTapLogin({
-    onSuccess: (credentialResponse) => {
-      console.log(credentialResponse);
-    },
-    onError: () => {
-      console.log("Login Failed");
-    },
-  });
-  return (
-    <>
-      <div>
-        <GoogleLogin
-          shape="pill"
-          size="large"
-          theme="filled_blue"
-          width={280}
-          onSuccess={(cer) => console.log(cer)}
-        ></GoogleLogin>
-      </div>
-      <FacebookLogin
-        appId="476481078155293"
-        onSuccess={(response) => {
-          console.log("Login Success!", response);
-        }}
-        onFail={(error) => {
-          console.log("Login Failed!", error);
-        }}
-        onProfileSuccess={(response) => {
-          console.log("Get Profile Success!", response);
-        }}
-      >
-        <button
-          style={{
-            fontFamily: "Google Sans,arial,sans-serif",
-            fontWeight: 500,
-            fontSize: "15px",
-          }}
-          type="button"
-          className="relative mt-10 flex h-[40px] w-[280px] items-center gap-[12px] rounded-full bg-[#0866FF] transition-all duration-100 hover:brightness-150"
-        >
-          <span className=" flex items-center justify-center pr-1">
-            <span className="rounded-full bg-white p-3 text-[#0866FF]">
-              <FacebookIcon size={20} />
-            </span>
-          </span>
-          <span className="">
-            تسجيل الدخول باستخدام
-            <span className=""> Facebook</span>
-          </span>
-        </button>
-      </FacebookLogin>
-    </>
-  );
-}
+
 export default App;

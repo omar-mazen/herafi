@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import FacebookIcon from "../../icons/FacebookIcon";
-import GoogleIcon from "../../icons/GoogleIcon";
 import SignUpForm from "../../features/shared/Authentication/SignUpForm";
 import { useEffect, useState } from "react";
 import UserSeachIcon from "../../icons/UserSeachIcon";
@@ -8,17 +7,45 @@ import ScrewdriverIcon from "../../icons/ScrewdriverIcon";
 import { useAuth } from "../../context/Auth";
 import Logo from "../../ui/Logo";
 import Button from "../../ui/Button";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import FacebookLogin from "@greatsumini/react-facebook-login";
+import useSocialLogin from "../../features/shared/Authentication/useSocialLogin";
 
 export default function SignUp() {
   const [selectedUser, setSelectedUser] = useState(null);
+  const { socilaLogin, isLoading } = useSocialLogin();
   const [userType, setUserType] = useState(null);
   const navigate = useNavigate();
   const { isAuth } = useAuth();
   useEffect(() => {
     if (isAuth) navigate("/", { replace: true });
   }, [isAuth]);
+  function googleLogin({ email, name, id }) {
+    socilaLogin({
+      type: "google",
+      data: {
+        email,
+        name,
+        id,
+        role: userType,
+      },
+    });
+  }
+  function facebookLogin({ email, name, id }) {
+    socilaLogin({
+      type: "facebook",
+      data: {
+        email,
+        name,
+        id,
+        role: userType,
+      },
+    });
+  }
+
   return userType ? (
-    <>
+    <GoogleOAuthProvider clientId="338014147339-mg1etbpd9s25fhim7hrn3iqaf29in5lo.apps.googleusercontent.com">
       <nav className="container sticky top-0 z-10 flex h-24 w-full items-center justify-between border-b border-text-color/5 bg-primary-background shadow-md">
         <div className=" flex select-none items-center gap-2">
           <Logo className=" h-20" />
@@ -46,26 +73,52 @@ export default function SignUp() {
           >
             أو
           </div>
-          <button
-            type="button"
-            className="flex h-16 w-full items-center justify-between gap-5 rounded-full border border-text-color/50 px-6 text-xsmall font-semibold transition-all duration-300 hover:translate-y-[-5px] hover:shadow-xl"
+          <div>
+            <GoogleLogin
+              shape="pill"
+              size="large"
+              theme="filled_blue"
+              width={280}
+              onSuccess={(cer) => {
+                const userData = jwtDecode(cer.credential);
+                googleLogin({
+                  email: userData.email,
+                  name: userData.name,
+                  id: userData?.sub,
+                });
+              }}
+            ></GoogleLogin>
+          </div>
+          <FacebookLogin
+            appId="476481078155293"
+            onProfileSuccess={(response) => {
+              facebookLogin({
+                id: response.id,
+                email: response.email,
+                name: response.name,
+              });
+            }}
           >
-            <span className="w-[90%]">التسجيل باستخدام حساب Google</span>
-            <span className="flex w-[10%] items-center justify-center">
-              <GoogleIcon />
-            </span>
-          </button>
-          <button
-            type="button"
-            className="flex h-16 w-full items-center justify-between gap-5 rounded-full border border-text-color/50 px-6 text-xsmall font-semibold transition-all duration-300 hover:translate-y-[-5px] hover:shadow-xl"
-          >
-            <span className="w-[90%]">التسجيل باستخدام حساب Facebook</span>
-            <span className=" flex w-[10%] items-center justify-center">
-              <span className="rounded-full bg-[#0866FF] p-2 text-white">
-                <FacebookIcon size={15} />
+            <button
+              style={{
+                fontFamily: "Google Sans,arial,sans-serif",
+                fontWeight: 500,
+                fontSize: "15px",
+              }}
+              type="button"
+              className="relative flex h-[40px] w-[280px] items-center gap-[12px] rounded-full bg-[#0866FF] transition-all duration-100 hover:brightness-150"
+            >
+              <span className=" flex items-center justify-center pr-1">
+                <span className="rounded-full bg-white p-3 text-[#0866FF]">
+                  <FacebookIcon size={20} />
+                </span>
               </span>
-            </span>
-          </button>
+              <span className="">
+                تسجيل الدخول باستخدام
+                <span className=""> Facebook</span>
+              </span>
+            </button>
+          </FacebookLogin>
           <span className="!mt-10 text-small">
             لديك حساب بالفعل ؟{" "}
             <Link className="text-primary-color" to="/login">
@@ -78,7 +131,7 @@ export default function SignUp() {
           className="hidden max-w-[500px] md:block"
         />
       </section>
-    </>
+    </GoogleOAuthProvider>
   ) : (
     <section className="container flex h-screen select-none flex-col items-center justify-center gap-10 sm:gap-12">
       <p className=" text-h2 font-semibold tracking-wide">

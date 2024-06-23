@@ -4,6 +4,9 @@ import StaticRatingStars from "../../../ui/StaticRatingStars";
 import useGetAllClientRatings from "./useGetAllClientRatings";
 import Pagenation from "../../../ui/Pagenation";
 import SmallSpinner from "../../../ui/SmallSpinner";
+import ProfilePic from "../../../ui/ProfilePic";
+import { imgBaseURL } from "../../../util/constatnt";
+import { Link } from "react-router-dom";
 
 export default function ClientRating() {
   const { data, isLoading } = useGetAllClientRatings();
@@ -27,6 +30,9 @@ export default function ClientRating() {
                     representation: "date",
                   })}
                   rating={review.rating}
+                  craftsman_id={review.craftsman_id}
+                  craftsman_image={review.craftsman_image}
+                  craftsman_name={review.craftsman_name}
                 />
               ))}
             </div>
@@ -39,18 +45,35 @@ export default function ClientRating() {
     </div>
   );
 }
-function RatingCard({ date, review, rating, imgs = [] }) {
+function RatingCard({
+  date,
+  review,
+  rating,
+  imgs = [],
+  craftsman_id,
+  craftsman_image,
+  craftsman_name,
+}) {
   return (
     <div className="rounded-lg bg-secondary-background px-6 py-4 shadow-md">
       <div className="flex items-center justify-between">
-        <div className=" mt-2">
-          <StaticRatingStars ratingPercentage={rating / 5} />
-        </div>
+        <Link
+          to={`/handyman/${craftsman_id}`}
+          className="flex items-center gap-3"
+        >
+          <ProfilePic
+            src={craftsman_image ? imgBaseURL + craftsman_image : null}
+          />
+          <span>{craftsman_name}</span>
+        </Link>
         <span className=" text-gray">{date}</span>
+      </div>
+      <div className=" mt-10">
+        <StaticRatingStars ratingPercentage={rating / 5} />
       </div>
       <p
         onClick={(e) => e.currentTarget.classList.toggle("line-clamp-3")}
-        className=" group my-5 line-clamp-3 font-light"
+        className=" group my-3 line-clamp-3 font-light"
       >
         {review}
       </p>

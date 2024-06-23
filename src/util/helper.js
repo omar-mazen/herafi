@@ -9,10 +9,11 @@ export function setCookie(key, value) {
 }
 export function getCookie(key) {
   const cookieArray = document.cookie.split(";");
+  const keyEquals = key + "=";
   for (let i = 0; i < cookieArray.length; i++) {
     let cookie = cookieArray[i].trim();
-    if (cookie.startsWith(key + "=")) {
-      return cookie.substring(key.length + 1);
+    if (cookie.startsWith(keyEquals)) {
+      return cookie.substring(keyEquals.length);
     }
   }
   return null;

@@ -6,8 +6,8 @@ export async function getAllClientRatings({ id, pageSize, page }) {
     response = await apiPrivate.post(
       `api/client/get_all_client_ratings?client_id=${id}&pagination=${pageSize}&page=${page}`,
     );
+    const data = await response.data.data;
     console.log(response);
-    const data = await response.data.data[0];
     return {
       currentPage: data.current_page,
       latestPage: data.last_page,

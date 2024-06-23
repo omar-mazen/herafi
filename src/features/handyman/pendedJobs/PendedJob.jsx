@@ -3,28 +3,24 @@ import UserClockIcon from "../../../icons/UserClockIcon";
 import StarIcon from "../../../icons/StarIcon";
 import CheckCircle from "../../../icons/CheckCircle";
 import OutlineClockIcon from "../../../icons/OutlineClockIcon";
-import ProfilePic from "../../../ui/ProfilePic";
-import Button from "../../../ui/Button";
-import { DayPicker } from "react-day-picker";
-import { ar } from "date-fns/locale";
 import {
-  addDays,
   differenceInDays,
   differenceInMonths,
   differenceInYears,
   formatISO,
 } from "date-fns";
-import useGetPendedJobs from "./usePendedJob";
 import useGetPendedJob from "./usePendedJob";
 import FullPageLoading from "../../../ui/FullPageLoading";
 import NotFound from "../../../ui/NotFound";
-import { joinDate } from "../../../util/helper";
-import { useState } from "react";
 import { imgBaseURL } from "../../../util/constatnt";
+import Button from "../../../ui/Button";
+import { Link } from "react-router-dom";
+import useCancelPendedJob from "./useCancelPendedJob";
+import SmallSpinner from "../../../ui/SmallSpinner";
 
 export default function PendedJob() {
   const { data, isLoading, isFetched } = useGetPendedJob();
-  console.log(isLoading, isFetched);
+  const { isLoading: isCanceling, cancelPendedJob } = useCancelPendedJob();
   if (isLoading) return <FullPageLoading />;
   if (isLoading && isFetched && !data[0]?.id)
     return <NotFound message={"هذه المهمه ليست موجوده."} />;
@@ -37,7 +33,13 @@ export default function PendedJob() {
         </p>
         <div className="flex items-center justify-between">
           <p className=" text-h2 ">{data[0]?.title}</p>
-          {/* <Button additionalStyle={` text-nowrap py-2`}>إلغاء</Button> */}
+          <Button
+            onClick={() => cancelPendedJob()}
+            disabled={isCanceling}
+            additionalStyle={` text-nowrap py-2`}
+          >
+            {isCanceling ? <SmallSpinner /> : "إلغاء"}
+          </Button>
         </div>
         <div className=" mt-5 flex items-center gap-10 text-gray">
           <span className="flex items-center gap-2">
@@ -53,6 +55,13 @@ export default function PendedJob() {
                   representation: "date",
                 })}
             </span>
+          </span>
+        </div>
+        <div className="mt-10">
+          <span className="inline-block text-gray">السعر:</span>
+          <span className=" inline-block pr-3 text-primary-color">
+            {data?.price}
+            <span className=" text-gray"> لكل {data?.type_of_pricing}</span>
           </span>
         </div>
         <div className="my-10 grid w-fit grid-cols-[auto,auto] items-center gap-5">
@@ -133,7 +142,10 @@ function AboutClient({ client }) {
                 : `${joinDate?.inDay} يوم`}
           </span>
         </div>
-        <div className=" flex  items-center gap-3 text-gray">
+        <Link
+          to={`/client/rating/${client?.id}`}
+          className=" flex  items-center gap-3 text-gray"
+        >
           <span className=" flex items-center gap-3">
             <StarIcon />
             <span>التقييم :</span>
@@ -144,7 +156,7 @@ function AboutClient({ client }) {
               ? `${client?.average_rating.toFixed(1)} (${client?.ratings_num})`
               : "لا يوجد"}
           </span>
-        </div>
+        </Link>
         <div className=" flex  items-center gap-3 text-gray">
           <span className=" flex items-center gap-3">
             <CheckCircle />

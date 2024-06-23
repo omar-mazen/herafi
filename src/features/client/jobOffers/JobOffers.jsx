@@ -14,7 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function JobOffers() {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetAllJobOffers();
+  const { data, isLoading, isFetched } = useGetAllJobOffers();
   const { deleteJobOffer } = useDeleteJobOffer();
   if (isLoading) return <FullPageLoading />;
   return (
@@ -22,22 +22,25 @@ export default function JobOffers() {
       <Menu>
         <div className=" container">
           <p className=" mb-10 mt-5 text-h2">عروض العمل الخاصة بك </p>
-          <Table
-            footer={
-              data.latestPage ? <Pagenation total={data.latestPage} /> : null
-            }
-          >
-            <Table.Head>
-              <Table.Row>
-                <Table.Cell head={true}>العنوان</Table.Cell>
-                <Table.Cell head={true}>الوصف</Table.Cell>
-                <Table.Cell head={true}>تاريخ الانشاء</Table.Cell>
-                <Table.Cell head={true}></Table.Cell>
-              </Table.Row>
-            </Table.Head>
-            {data?.data?.length > 0 && (
+
+          {isFetched && data?.data?.length > 0 ? (
+            <Table
+              footer={
+                data?.latestPage ? (
+                  <Pagenation total={data?.latestPage} />
+                ) : null
+              }
+            >
+              <Table.Head>
+                <Table.Row>
+                  <Table.Cell head={true}>العنوان</Table.Cell>
+                  <Table.Cell head={true}>الوصف</Table.Cell>
+                  <Table.Cell head={true}>تاريخ الانشاء</Table.Cell>
+                  <Table.Cell head={true}></Table.Cell>
+                </Table.Row>
+              </Table.Head>
               <Table.Body>
-                {data.data.map((offer, i) => (
+                {data?.data.map((offer, i) => (
                   <>
                     <Table.Row key={i}>
                       <Table.Cell>
@@ -81,8 +84,10 @@ export default function JobOffers() {
                   </>
                 ))}
               </Table.Body>
-            )}
-          </Table>
+            </Table>
+          ) : (
+            <p>لا يوجد عروض عمل خاصه بك حتي الان</p>
+          )}
         </div>
       </Menu>
     </Modal>

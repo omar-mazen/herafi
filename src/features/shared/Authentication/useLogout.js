@@ -12,6 +12,9 @@ export default function useLogout() {
     mutationFn: async () => {
       queryClient.clear();
       await deleteCookie("token");
+    },
+    onSuccess: () => {
+      localStorage.clear("user");
       window.location.reload();
     },
   });

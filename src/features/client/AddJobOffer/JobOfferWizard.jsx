@@ -6,7 +6,11 @@ import { useCallback, useState } from "react";
 import CameraIcon from "../../../icons/CameraIcon";
 import XIcon from "../../../icons/XIcon";
 import SelectOption from "../../../ui/SelectOption";
-import { getCities, getGovernorates } from "../../../util/constatnt";
+import {
+  getCities,
+  getGovernorates,
+  phoneRegex,
+} from "../../../util/constatnt";
 import Input from "../../../ui/Input";
 import { DayPicker } from "react-day-picker";
 import { ar } from "date-fns/locale";
@@ -16,6 +20,7 @@ import { useAuth } from "../../../context/Auth";
 import { formatISO } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import FullPageLoading from "../../../ui/FullPageLoading";
+import PhoneIcon from "../../../icons/PhoneIcon";
 
 export default function JobOfferWizard() {
   const { id } = useAuth();
@@ -207,14 +212,14 @@ export default function JobOfferWizard() {
         </WizardStepper.Step>
         <WizardStepper.Step
           isNextButtonEnabled={
-            address.city && address.gov && address.st && getValues("price")
+            address.city && address.gov && address.st && getValues("phone")
           }
         >
           <div className="mx-auto my-10 grid w-fit max-w-[600px] grid-cols-1 justify-items-start gap-10 ">
             <div>
               <p className=" mb-5 justify-self-start text-large">اضف عنوان</p>
               <p className=" mb-10 justify-self-start text-small text-gray">
-                لن يظهر عنوانك الا للحرفي الذي سيقبل لتنفيذ المهمه
+                لن يظهر عنوانك الا للحرفي الذي سيُقبل لتنفيذ المهمه
               </p>
               <div className="grid grid-cols-2 grid-rows-2 gap-5 sm:grid-cols-3 sm:grid-rows-1">
                 <SelectOption
@@ -255,20 +260,23 @@ export default function JobOfferWizard() {
               </div>
             </div>
             <div>
-              <p className=" mb-5 justify-self-start text-large">اضف سعر</p>
-              <p className="mb-10 max-w-[600px] text-gray">
-                يرجى ملاحظة أن السعر الذي ستقوم بكتابته لن يظهر لأي حرفي. إنما
-                سيتم استخدامه لتصفية العروض إلى جزئين، الجزء الأول يشمل العروض
-                التي تكون أقل من أو تساوي السعر الذي حددته، والجزء الآخر يشمل
-                العروض التي تكون أعلى من السعر الذي حددته. شكرًا لتفهمك
+              <p className=" mb-5 justify-self-start text-large">اضف هاتفك</p>
+              <p className=" mb-10 justify-self-start text-small text-gray">
+                لن يظهر رقم هاتفك الا للحرفي الذي سيًقبل لتنفيذ المهمه
               </p>
               <FormInput
-                label="السعر"
-                type="number"
-                value={watch("price")}
+                autoComplete="tel"
+                required
+                label="رقم الهاتف"
+                value={getValues("phone")}
+                error={errors?.phone}
                 register={{
-                  ...register("price", {
-                    required: { value: true, message: "السعر مطلوب." },
+                  ...register("phone", {
+                    required: { value: true, message: "هذا الحقل مطلوب" },
+                    pattern: {
+                      value: phoneRegex,
+                      message: "ادخل رقم هاتف صحيح",
+                    },
                   }),
                 }}
               />
@@ -299,8 +307,8 @@ export default function JobOfferWizard() {
                 <span>{`${address.gov}, ${address.city}, ${address.st}`}</span>
               </div>
               <div className="py-4">
-                <span className=" pl-3 text-medium text-gray">السعر :</span>
-                <span>{getValues("price")}</span>
+                <span className=" pl-3 text-medium text-gray">الهاتف :</span>
+                <span>{getValues("phone")}</span>
               </div>
               <div className=" flex items-start py-4">
                 <span className=" pl-3 text-medium text-gray">الصور :</span>

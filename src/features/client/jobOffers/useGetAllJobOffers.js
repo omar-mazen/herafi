@@ -8,9 +8,9 @@ export default function useGetAllJobOffers() {
   const { id } = useAuth();
   const [searchParams] = useSearchParams();
   const page = searchParams.get("page") || 1;
-  const { isLoading, data } = useQuery({
+  const { isLoading, data, isFetched } = useQuery({
     queryKey: ["job-offers", page],
     queryFn: () => getAllJobOffers({ id, pageSize: bigPageSize, page }),
   });
-  return { data, isLoading };
+  return { data, isLoading, isFetched };
 }

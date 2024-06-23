@@ -6,22 +6,34 @@ export async function completeInfo({
   description,
   image,
   craftId,
+  cities,
+  phones,
+  whatsapp,
 }) {
   const data = {
     address,
     description,
     image,
-    craftId,
+    craft_id: craftId,
   };
-  const formdata = new FormData();
-  for (const key in data) {
-    if (data[key]) formdata.append(key, data[key]);
-  }
+  const formData = new FormData();
+
+  for (const key in data) if (data[key]) formData.append(key, data[key]);
+
+  for (const city of cities) formData.append("city[]", city);
+
+  if (phones.length > 0)
+    for (const phone of phones) formData.append("phone[]", phone);
+
+  if (whatsapp.length > 0)
+    for (const wh of whatsapp) formData.append("whatsapp[]", wh);
+
+  formData.forEach((e) => console.log(e));
   let response;
   try {
     response = await apiPrivate.post(
       `/api/craftsman/complete-info?craftsman_id=${id}`,
-      formdata,
+      formData,
       {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -29,8 +41,10 @@ export async function completeInfo({
       },
     );
     const data = response.data;
+    console.log(response);
     return data;
   } catch (error) {
+    console.log(error);
     throw new Error(error.response.data.message);
   }
 }

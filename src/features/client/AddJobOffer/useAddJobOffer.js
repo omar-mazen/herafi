@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { addJobOffer as addJobOfferApi } from "../../../services/client/jobOffer";
-import { useAuth } from "../../../context/Auth";
 
 export default function useAddJobOffer() {
   const { isLoading, mutate: addJobOffer } = useMutation({

@@ -25,6 +25,7 @@ import { useState } from "react";
 import useGetNewJob from "./useGetNewJob";
 import FullPageLoading from "../../../ui/FullPageLoading";
 import { imgBaseURL } from "../../../util/constatnt";
+import { Link } from "react-router-dom";
 
 const options = ["متر طولي", "متر مربع", "نقطة", "المشروع"];
 export default function NewJob() {
@@ -216,7 +217,10 @@ function AboutClient({ client }) {
                 : `${joinDate?.inDay} يوم`}
           </span>
         </div>
-        <div className=" flex  items-center gap-3 text-gray">
+        <Link
+          to={`/client/rating/${client?.id}`}
+          className=" flex  items-center gap-3 text-gray"
+        >
           <span className=" flex items-center gap-3">
             <StarIcon />
             <span>التقييم :</span>
@@ -226,7 +230,7 @@ function AboutClient({ client }) {
               ? `${client?.average_rating.toFixed(1)} (${client?.ratings_num})`
               : "لا يوجد"}
           </span>
-        </div>
+        </Link>
         <div className=" flex  items-center gap-3 text-gray">
           <span className=" flex items-center gap-3">
             <CheckCircle />

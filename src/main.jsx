@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { AuthProvider } from "./context/Auth.jsx";
 import "./index.css";
@@ -11,21 +11,21 @@ import { ToastContainer } from "react-toastify";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import App from "./App.jsx";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import FullPageLoading from "./ui/FullPageLoading.jsx";
 
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId="338014147339-mg1etbpd9s25fhim7hrn3iqaf29in5lo.apps.googleusercontent.com">
-      <ThemeProvider>
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools />
-          <AuthProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools />
+        <AuthProvider>
+          <Suspense fallback={<FullPageLoading />}>
             <App />
-            <ToastContainer position="top-right" rtl />
-          </AuthProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
-    </GoogleOAuthProvider>
+          </Suspense>
+          <ToastContainer position="top-right" rtl />
+        </AuthProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   </React.StrictMode>,
 );

@@ -10,6 +10,7 @@ export async function addJobOffer({
   start_date,
   end_date,
   city,
+  phone,
 }) {
   const data = {
     title,
@@ -19,6 +20,7 @@ export async function addJobOffer({
     start_date,
     end_date,
     city,
+    phone,
   };
   let response;
   const formData = new FormData();

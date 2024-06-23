@@ -7,7 +7,7 @@ export default function useGetPortfolio() {
   const [searcharams] = useSearchParams();
   const page = searcharams.get("page") || 1;
   const { data, isLoading } = useQuery({
-    queryKey: [`handyman-${id}-portfolio`, page],
+    queryKey: [`portfolio`, id, page],
     queryFn: () => getHandymanPortfolio({ id, page, pageSize: 5 }),
   });
   return { isLoading, portfolio: data };

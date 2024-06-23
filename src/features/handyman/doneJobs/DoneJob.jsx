@@ -35,6 +35,7 @@ export default function DoneJob() {
           <span className="inline-block text-gray">السعر:</span>
           <span className=" inline-block pr-3 text-primary-color">
             {data?.price}
+            <span className=" text-gray"> لكل {data?.type_of_pricing}</span>
           </span>
         </div>
         <div className="my-5">

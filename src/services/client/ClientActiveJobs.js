@@ -16,6 +16,19 @@ export async function getAllClientAciveJobs({ id, pageSize, page }) {
     throw new Error(error.response.data.message);
   }
 }
+export async function getClientAciveJob({ jobId }) {
+  let response;
+  try {
+    response = await apiPrivate.post(
+      `/api/client/get_active_job?job_id=${jobId}`,
+    );
+    const data = await response.data.data;
+    return data[0];
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.response.data.message);
+  }
+}
 export async function ClientFinishJob({
   handymanId,
   jobId,
