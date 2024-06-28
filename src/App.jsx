@@ -55,7 +55,7 @@ function App() {
     var pusher = new Pusher(pusherApiKey, {
       cluster: "ap1",
     });
-    const channelName = `${id}${role == "client" ? role : role == "handyman" ? "craftsman" : ""}Notify`;
+    const channelName = `${id}${role == "client" ? "Client" : role == "handyman" ? "Craftsman" : ""}Notify`;
     var channel = pusher.subscribe(channelName);
     channel.bind(channelName, function (data) {
       toast.success(JSON.stringify(data), {
