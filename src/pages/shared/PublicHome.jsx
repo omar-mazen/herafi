@@ -16,6 +16,8 @@ import {
 } from "date-fns";
 import HandymanIcon from "../../icons/HandymanIcon";
 import ProfilePic from "../../ui/ProfilePic";
+import { toast } from "react-toastify";
+import NotificationIcon from "../../icons/NotificationIcon";
 
 export default function PublicHome() {
   const navigate = useNavigate();

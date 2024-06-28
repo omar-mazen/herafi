@@ -84,7 +84,7 @@ function Rating() {
           />
           <label className="flex items-center gap-2">
             <StaticRatingStars ratingPercentage={0.6} />
-            <span className=" text-xsmall font-semibold">فقط</span>
+            <span className=" text-xsmall font-semibold">وأكثر</span>
           </label>
         </li>
         <li className="flex items-center gap-2">

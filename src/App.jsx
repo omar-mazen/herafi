@@ -41,10 +41,28 @@ import ClientRating from "./features/client/Rating/ClientRating";
 import ForgetPasswordPage from "./pages/shared/ForgetPasswordPage";
 import ForgotPasswordEmailForm from "./features/shared/Authentication/ForgotPasswordEmailForm";
 import ForgotPasswordNewPasswordForm from "./features/shared/Authentication/ForgotPasswordNewPasswordForm";
-
+import { useEffect } from "react";
+import Pusher from "pusher-js";
+import { toast } from "react-toastify";
+import NotificationIcon from "./icons/NotificationIcon";
+const pusherApiKey = "a152a3c731c935589cac";
 function App() {
   const { crafts } = useGetAllCrafts();
   const { role, isAuth, id } = useAuth();
+  useEffect(() => {
+    if (!id || !role) return;
+    Pusher.logToConsole = true;
+    var pusher = new Pusher(pusherApiKey, {
+      cluster: "ap1",
+    });
+    const channelName = `${id}${role == "client" ? role : role == "handyman" ? "craftsman" : ""}Notify`;
+    var channel = pusher.subscribe(channelName);
+    channel.bind(channelName, function (data) {
+      toast.success(JSON.stringify(data), {
+        icon: <NotificationIcon />,
+      });
+    });
+  }, [id, role]);
   const publicRoutes = (
     <>
       <Route path="/login" element={<Login />} />
