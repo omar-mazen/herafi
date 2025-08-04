@@ -1,11 +1,11 @@
-## 🛠️ Hirafi (حِرَفي) — Platform for Clients & Craftsmen
+## Hirafi (حِرَفي) — Platform for Clients & Craftsmen
 
 > **⚠️Note:** This project is **not currently hosted online**, as the backend was developed using **Laravel** and temporarily hosted with **nGrok**.
 > To understand how it works, check the **walkthrough video** below.
 
 
 
-### 📽 Walkthrough Video
+### Walkthrough Video
 
 [👉 Watch the full walkthrough of the platform here](https://vimeo.com/1106946518)
 
