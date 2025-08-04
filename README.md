@@ -27,19 +27,19 @@ Craftsmen can showcase their portfolio, receive job offers, and maintain their r
 * Social login (Google & Facebook)
 
 <p align="left">
-<img src="./screenshots/login/Screenshot_11-6-2024_11154_localhost.jpeg" width="200"/>
-<img src="./screenshots/sign up/1- choose sign up as client or handyman.jpeg" width="200"/>
-<img src="./screenshots/sign up/2-fill form of signup.jpeg" width="200"/>
+<img src="./screenshots/login/Screenshot_11-6-2024_11154_localhost.jpeg" width="500"/>
+<img src="./screenshots/sign up/1- choose sign up as client or handyman.jpeg" width="500"/>
+<img src="./screenshots/sign up/2-fill form of signup.jpeg" width="500"/>
 
 </p>
 
 ### Handymen Complete Data After Signup
 
 <p align="left">
-  <img src="./screenshots/craftsman/data complete wizard/1.jpeg" width="200"/>
-  <img src="./screenshots/craftsman/data complete wizard/2.jpeg" width="200"/>
-  <img src="./screenshots/craftsman/data complete wizard/3-add phone number or whatsapp number.jpeg" width="200"/>
-  <img src="./screenshots/craftsman/data complete wizard/4.jpeg" width="200"/>
+  <img src="./screenshots/craftsman/data complete wizard/1.jpeg" width="500"/>
+  <img src="./screenshots/craftsman/data complete wizard/2.jpeg" width="500"/>
+  <img src="./screenshots/craftsman/data complete wizard/3-add phone number or whatsapp number.jpeg" width="500"/>
+  <img src="./screenshots/craftsman/data complete wizard/4.jpeg" width="500"/>
 </p>
 
 ###  Client Pages
@@ -51,17 +51,17 @@ Craftsmen can showcase their portfolio, receive job offers, and maintain their r
    * Step 3: Add address and expected budget
    * Step 4: Review and confirm submission
   <p align="left">
-  <img src="./screenshots/client/2-add job offer/1.jpeg" width="200"/>
-  <img src="./screenshots/client/2-add job offer/2.jpeg" width="200"/>
-  <img src="./screenshots/client/2-add job offer/3.jpeg" width="200"/>
-  <img src="./screenshots/client/2-add job offer/4.jpeg" width="200"/>
+  <img src="./screenshots/client/2-add job offer/1.jpeg" width="500"/>
+  <img src="./screenshots/client/2-add job offer/2.jpeg" width="500"/>
+  <img src="./screenshots/client/2-add job offer/3.jpeg" width="500"/>
+  <img src="./screenshots/client/2-add job offer/4.jpeg" width="500"/>
 </p>
 
 2. **My Job Offers**
 
    * View offers submitted by the client that are still awaiting a craftsman assignment
   <p align="left">
-  <img src="./screenshots/client/3-job offers/Screenshot_18-6-2024_5232_localhost.jpeg" width="200"/>
+  <img src="./screenshots/client/3-job offers/Screenshot_18-6-2024_5232_localhost.jpeg" width="500"/>
 </p>
 
 3. **Job Offer Detail**
@@ -69,15 +69,15 @@ Craftsmen can showcase their portfolio, receive job offers, and maintain their r
    * View job details and see proposals from craftsmen
    * Accept one of the proposals to assign the task
   <p align="left">
-  <img src="./screenshots/client/4-job offer/1.jpeg" width="200"/>
-  <img src="./screenshots/client/4-job offer/2.jpeg" width="200"/>
+  <img src="./screenshots/client/4-job offer/1.jpeg" width="500"/>
+  <img src="./screenshots/client/4-job offer/2.jpeg" width="500"/>
 </p>
 
 4. **Active Jobs**
 
    * Jobs currently in progress with assigned craftsmen
   <p align="left">
-  <img src="./screenshots/client/5-active jobs/Screenshot_18-6-2024_51036_localhost.jpeg" width="200"/>
+  <img src="./screenshots/client/5-active jobs/Screenshot_18-6-2024_51036_localhost.jpeg" width="500"/>
 </p>
 
 5. **Active Job Detail**
@@ -85,18 +85,18 @@ Craftsmen can showcase their portfolio, receive job offers, and maintain their r
    * Full job details
    * Button to “End Job” which opens a modal for submitting craftsman review
   <p align="left">
-  <img src="./screenshots/client/6-active job/1.jpeg" width="200"/>
-  <img src="./screenshots/client/6-active job/2- العميل بينهي الشغلانه ويكتب تقييمه للصنايعي.jpeg" width="200"/>
+  <img src="./screenshots/client/6-active job/1.jpeg" width="500"/>
+  <img src="./screenshots/client/6-active job/2- العميل بينهي الشغلانه ويكتب تقييمه للصنايعي.jpeg" width="500"/>
 </p>
 
 6. **Favorites**
 
    * Create and manage favorite lists of craftsmen for easy access later
   <p align="left">
-  <img src="./screenshots/client/7-favorites/1-create favorite list.jpeg" width="200"/>
-  <img src="./screenshots/client/7-favorites/2-add to favorite List.jpeg" width="200"/>
-  <img src="./screenshots/client/7-favorites/3-favorite List.jpeg" width="200"/>
-  <img src="./screenshots/client/7-favorites/4-all favorite lists.jpeg" width="200"/>
+  <img src="./screenshots/client/7-favorites/1-create favorite list.jpeg" width="500"/>
+  <img src="./screenshots/client/7-favorites/2-add to favorite List.jpeg" width="500"/>
+  <img src="./screenshots/client/7-favorites/3-favorite List.jpeg" width="500"/>
+  <img src="./screenshots/client/7-favorites/4-all favorite lists.jpeg" width="500"/>
 </p>
 
 7. **Search Craftsmen**
@@ -106,7 +106,7 @@ Craftsmen can showcase their portfolio, receive job offers, and maintain their r
    * Filter by: Years of experience, rating, or city
 
   <p align="left">
-  <img src="./screenshots/client/search/Screenshot_18-6-2024_81815_localhost.jpeg" width="200"/>
+  <img src="./screenshots/client/search/Screenshot_18-6-2024_81815_localhost.jpeg" width="500"/>
 </p>
 
 ### Craftsman Pages
@@ -115,8 +115,8 @@ Craftsmen can showcase their portfolio, receive job offers, and maintain their r
 
    * See job listings that match their skill and city
   <p align="left">
-  <img src="./screenshots/craftsman/new jobs/1.jpeg" width="200"/>
-  <img src="./screenshots/craftsman/new jobs/2.jpeg" width="200"/>
+  <img src="./screenshots/craftsman/new jobs/1.jpeg" width="500"/>
+  <img src="./screenshots/craftsman/new jobs/2.jpeg" width="500"/>
 </p>
 
 2. **New Job Details**
@@ -124,29 +124,29 @@ Craftsmen can showcase their portfolio, receive job offers, and maintain their r
    * View full job description
    * Submit offer via modal window
   <p align="left">
-  <img src="./screenshots/craftsman/new job/1.jpeg" width="200"/>
-  <img src="./screenshots/craftsman/new job/2-الصنايعي بيقدم عرض للعميل علي الشغلانه اللي العميل عارضها علي الموقع.jpeg" width="200"/>
+  <img src="./screenshots/craftsman/new job/1.jpeg" width="500"/>
+  <img src="./screenshots/craftsman/new job/2-الصنايعي بيقدم عرض للعميل علي الشغلانه اللي العميل عارضها علي الموقع.jpeg" width="500"/>
 </p>
 
 3. **Pending Jobs**
 
    * Jobs they have applied to, but not yet accepted
   <p align="left">
-  <img src="./screenshots/craftsman/pending jobs/Screenshot_12-6-2024_33755_localhost.jpeg" width="200"/>
+  <img src="./screenshots/craftsman/pending jobs/Screenshot_12-6-2024_33755_localhost.jpeg" width="500"/>
 </p>
 
 4. **Pending Job Details**
 
    * View submitted offer and status
   <p align="left">
-  <img src="./screenshots/craftsman/pending job/مهمه معلقه يعني الصنايعي قدم عليها علشان يشتغلها ولسه العميل مقبلش الطلب بتاعه او اي طلب من اي صنايعي اخر.jpg" width="200"/>
+  <img src="./screenshots/craftsman/pending job/مهمه معلقه يعني الصنايعي قدم عليها علشان يشتغلها ولسه العميل مقبلش الطلب بتاعه او اي طلب من اي صنايعي اخر.jpg" width="500"/>
 </p>
 
 5. **Active Jobs**
 
    * Jobs currently in progress
 <p align="left">
-  <img src="./screenshots/craftsman/active jobs/1.jpeg" width="200"/>
+  <img src="./screenshots/craftsman/active jobs/1.jpeg" width="500"/>
 </p>
 
 6. **Active Job Detail**
@@ -154,8 +154,8 @@ Craftsmen can showcase their portfolio, receive job offers, and maintain their r
    * Full job info
    * Button to “End Job” opens modal to rate the client
 <p align="left">
-  <img src="./screenshots/craftsman/active job/Screenshot_12-6-2024_51833_localhost.jpg" width="200"/>
-  <img src="./screenshots/craftsman/active job/2-انهاء المهمه من قبل الحرفي و يكتب تقييمه وينتظر ان ينهي العميل ايضا المهمه و يكتب تقييمه لكي تنتقل الي المهمام المنهيه.jpg" width="200"/>
+  <img src="./screenshots/craftsman/active job/Screenshot_12-6-2024_51833_localhost.jpg" width="500"/>
+  <img src="./screenshots/craftsman/active job/2-انهاء المهمه من قبل الحرفي و يكتب تقييمه وينتظر ان ينهي العميل ايضا المهمه و يكتب تقييمه لكي تنتقل الي المهمام المنهيه.jpg" width="500"/>
 </p>
 
 7. **Craftsman Portfolio**
@@ -171,12 +171,12 @@ Craftsmen can showcase their portfolio, receive job offers, and maintain their r
      * Client feedback from past jobs
 
   <p align="left">
-  <img src="./screenshots/craftsman/portfolio/1.jpeg" width="200"/>
-  <img src="./screenshots/craftsman/portfolio/2.jpeg" width="200"/>
-  <img src="./screenshots/craftsman/portfolio/3.jpeg" width="200"/>
-  <img src="./screenshots/craftsman/portfolio/4.jpeg" width="200"/>
-  <img src="./screenshots/craftsman/portfolio/5.jpeg" width="200"/>
-  <img src="./screenshots/craftsman/portfolio/6.jpeg" width="200"/>
+  <img src="./screenshots/craftsman/portfolio/1.jpeg" width="500"/>
+  <img src="./screenshots/craftsman/portfolio/2.jpeg" width="500"/>
+  <img src="./screenshots/craftsman/portfolio/3.jpeg" width="500"/>
+  <img src="./screenshots/craftsman/portfolio/4.jpeg" width="500"/>
+  <img src="./screenshots/craftsman/portfolio/5.jpeg" width="500"/>
+  <img src="./screenshots/craftsman/portfolio/6.jpeg" width="500"/>
 </p>
 
 ## Problem Addressed
