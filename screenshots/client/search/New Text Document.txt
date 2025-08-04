@@ -1,0 +1,1 @@
+Search for craftsmen by the name of the craft. You can apply a filter by city, rating, or number of years of joining. You can sort by rating, completed jobs, or date of joining.
